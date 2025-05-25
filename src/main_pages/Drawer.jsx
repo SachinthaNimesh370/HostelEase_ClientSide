@@ -114,7 +114,7 @@ export default function MiniDrawer() {
   const drawerItems2 = [
     { text: 'Student', icon: <SchoolIcon /> },
     { text: 'Visitors Log', icon: <PeopleIcon /> },
-    { text: 'Noties', icon: <NotificationsIcon /> },
+    { text: 'Notification', icon: <NotificationsIcon /> },
   ];
 
   return (
