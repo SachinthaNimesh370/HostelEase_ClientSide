@@ -17,7 +17,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-// ✅ Suitable icons
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -25,6 +24,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+
+import { Outlet, useNavigate } from 'react-router-dom'; // ✅ for routing
 
 const drawerWidth = 240;
 
@@ -89,33 +90,33 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
-  }),
+  })
 );
 
-export default function MiniDrawer() {
+export default function DrawerLayout() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate(); // ✅ hook to navigate
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
 
   const drawerItems1 = [
-    { text: 'Dashboard', icon: <DashboardIcon /> },
-    { text: 'Rooms', icon: <MeetingRoomIcon /> },
-    { text: 'Complain', icon: <ReportProblemIcon /> },
-    { text: 'Payment', icon: <PaymentIcon /> },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: 'dashboard' },
+    { text: 'Rooms', icon: <MeetingRoomIcon />, path: 'rooms' },
+    { text: 'Complain', icon: <ReportProblemIcon />, path: 'complain' },
+    { text: 'Payment', icon: <PaymentIcon />, path: 'payment' },
   ];
 
   const drawerItems2 = [
-    { text: 'Student', icon: <SchoolIcon /> },
-    { text: 'Visitors Log', icon: <PeopleIcon /> },
-    { text: 'Notification', icon: <NotificationsIcon /> },
+    { text: 'Student', icon: <SchoolIcon />, path: 'students' },
+    { text: 'Visitors Log', icon: <PeopleIcon />, path: 'visitors' },
+    { text: 'Notification', icon: <NotificationsIcon />, path: 'notification' },
   ];
+
+  const handleNavigate = (path) => {
+    navigate(`/drawer/${path}`);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -147,6 +148,7 @@ export default function MiniDrawer() {
           {drawerItems1.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+                onClick={() => handleNavigate(item.path)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -172,6 +174,7 @@ export default function MiniDrawer() {
           {drawerItems2.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+                onClick={() => handleNavigate(item.path)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -193,11 +196,11 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Welcome to the Hostel Management Dashboard.
-        </Typography>
+        {/* 👉 This will load the child route component */}
+        <Outlet />
       </Box>
     </Box>
   );
