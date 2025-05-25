@@ -43,7 +43,7 @@ export default function SignIn() {
                 />
             </Box>
             <Box sx={{ marginTop: '20px' }}>
-                <Button fullWidth variant="contained">
+                <Button fullWidth variant="contained" onClick={() => navigate('/drawer')}>
                 Sign In
                 </Button>
             </Box>
