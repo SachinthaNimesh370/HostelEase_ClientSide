@@ -17,14 +17,14 @@ export default function SignIn() {
         >
             {/* Form Field */}
             <Box
-            border={1}
-            borderColor="grey.400"
-            borderRadius="5px"
-            sx={{ width: '400px', padding: '20px' }}
+                border={1}
+                borderColor="grey.400"
+                borderRadius="7px"
+                sx={{ width: '400px', padding: '20px' }}
             >
             <Box>
                 <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
-                Sign In
+                        Sign In
                 </Typography>
                 <TextField
                 fullWidth
