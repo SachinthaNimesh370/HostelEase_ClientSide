@@ -1,8 +1,9 @@
 
-import { Box, Typography, TextField, Button, Alert } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
+import { Box, Typography, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
+    const navigate = useNavigate();
 
 
   return (
@@ -55,7 +56,7 @@ export default function SignIn() {
                 sx={{ marginTop: '5px' }}
             >
                 <Typography>Don't have an account?</Typography>
-                <Button variant="text">Sign Up</Button>
+                <Button variant="text" onClick={() => navigate('/signup')}>Sign Up</Button>
             </Box>
 
             
