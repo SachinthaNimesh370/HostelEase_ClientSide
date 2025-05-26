@@ -25,7 +25,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { Outlet, useNavigate } from 'react-router-dom'; // ✅ for routing
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'; // ✅ for navigation + current path
 
 const drawerWidth = 240;
 
@@ -96,7 +96,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function DrawerLayout() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate(); // ✅ hook to navigate
+  const navigate = useNavigate();
+  const location = useLocation(); // ✅ to check current path
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
@@ -118,6 +119,8 @@ export default function DrawerLayout() {
     navigate(`/drawer/${path}`);
   };
 
+  const isActive = (path) => location.pathname === `/drawer/${path}`;
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -137,22 +140,30 @@ export default function DrawerLayout() {
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
+
         <Divider />
         <List>
           {drawerItems1.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 onClick={() => handleNavigate(item.path)}
+                selected={isActive(item.path)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  backgroundColor: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: isActive(item.path) ? 'primary.dark' : 'action.hover',
+                  },
                 }}
               >
                 <ListItemIcon
@@ -160,6 +171,7 @@ export default function DrawerLayout() {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
+                    color: isActive(item.path) ? '#5D5FEF' : 'inherit',
                   }}
                 >
                   {item.icon}
@@ -169,16 +181,23 @@ export default function DrawerLayout() {
             </ListItem>
           ))}
         </List>
+
         <Divider />
         <List>
           {drawerItems2.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 onClick={() => handleNavigate(item.path)}
+                selected={isActive(item.path)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  backgroundColor: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: isActive(item.path) ? '#5D5FEF' : 'action.hover',
+                  },
                 }}
               >
                 <ListItemIcon
@@ -186,6 +205,7 @@ export default function DrawerLayout() {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
+                    color: isActive(item.path) ? '#5D5FEF' : 'inherit',
                   }}
                 >
                   {item.icon}
@@ -199,7 +219,6 @@ export default function DrawerLayout() {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {/* 👉 This will load the child route component */}
         <Outlet />
       </Box>
     </Box>
