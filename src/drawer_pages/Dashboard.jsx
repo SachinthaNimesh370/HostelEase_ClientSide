@@ -10,8 +10,8 @@ import DashbordPaper from '../component/DashbordPaper';
 export default function Dashboard() {
   return (
     <Box>
-      <Box>
-        
+      <Box >
+
         {/* Paper  */}
         <DashbordPaper/>
             

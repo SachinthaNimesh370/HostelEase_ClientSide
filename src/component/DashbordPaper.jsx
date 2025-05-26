@@ -6,7 +6,7 @@ import { Typography } from '@mui/material';
 
 export default function DashbordPaper() {
   return (
-    <Box>
+    <Box >
         <Box
             
             sx={{
@@ -14,6 +14,7 @@ export default function DashbordPaper() {
             boxShadow: 3, // elevation-like effect
             borderRadius: 1, // optional: soft corners like Paper
             p: 2, // shorthand for padding
+            
             
             }}
             padding={2}
@@ -27,8 +28,8 @@ export default function DashbordPaper() {
                     flexWrap: 'wrap',
                     '& > :not(style)': {
                     m: 1,
-                    width: 200,
-                    height: 125,   
+                    width: 220,
+                    height: 130,   
                 },
 
                 }}
