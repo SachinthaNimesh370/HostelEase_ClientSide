@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import axios from 'axios';
+
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -16,6 +18,18 @@ export default function SignUp() {
     };
      const handleChangeGender = (event) => {
         setGender(event.target.value);
+    };
+
+    const handleSignUp = () => {
+        axios.get('http://localhost:8090/api/v1/home/get')
+            .then(response => {
+                console.log('Data received:', response.data);
+                // You can handle the response (e.g., navigate, show success message, etc.)
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // Optionally show an error message
+            });
     };
   return (
     <Box
@@ -132,7 +146,7 @@ export default function SignUp() {
                 autoComplete="new-password"
             />
             <Box sx={{ marginTop: '20px' }}>
-                <Button fullWidth variant="contained">
+                <Button fullWidth variant="contained" onClick={handleSignUp}>
                 Sign Up
                 </Button>
             </Box>
