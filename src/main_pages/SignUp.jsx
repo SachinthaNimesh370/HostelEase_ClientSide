@@ -35,6 +35,10 @@ export default function SignUp() {
 
 
     const handleSignUp = () => {
+        if (password !== confirmPassword || password===null) {
+            alert("Passwords do not match");
+            return;
+        }
         const userData = {
             //id: 0, // let backend auto-generate if needed
             regNo: regNo,
@@ -56,13 +60,9 @@ export default function SignUp() {
                 console.error("Signup failed:", error.response?.data || error.message);
                 alert("Signup failed!");
             });
-
-
-
-
         
-            
     };
+
   return (
     <Box
     display='flex'
@@ -90,7 +90,7 @@ export default function SignUp() {
                     sx={{width:'49%'}} 
                     margin='normal'
                     size='small'
-                    id="outlined-search" 
+                    id="First_Name" 
                     label="First Name" 
                     type="search" 
                     onChange={(e) => setFName(e.target.value)}
@@ -99,7 +99,7 @@ export default function SignUp() {
                     sx={{width:'49%'}}
                     size='small'
                     margin='normal'
-                    id="outlined-search" 
+                    id="Last_Name" 
                     label="Last Name" 
                     type="search"
                     onChange={(e) => setLName(e.target.value)} 
@@ -112,7 +112,7 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
-                id="outlined-search_reg" 
+                id="Reg_No" 
                 label="Reg No" 
                 type="search" 
                 onChange={(e) => setRegNo(e.target.value)}
@@ -121,7 +121,7 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
-                id="outlined-search" 
+                id="Email_Address" 
                 label="Email Address" 
                 type="search" 
                 onChange={(e) => setEmail(e.target.value)}
@@ -130,7 +130,7 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
-                id="outlined-search" 
+                id="Contact_Number" 
                 label="Contact Number" 
                 type="search" 
                 onChange={(e) => setContactNo(e.target.value)}
@@ -159,8 +159,8 @@ export default function SignUp() {
                 <FormControl fullWidth>
                     <InputLabel id="gender">Gender</InputLabel>
                     <Select
-                        labelId="gender-label"
-                        id="gender-select"
+                        labelId="Role"
+                        id="Role"
                         size='small'
                         value={gender}
                         label="Role"
@@ -176,7 +176,7 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
-                id="outlined-password-input1"
+                id="Password"
                 label="Password"
                 type="password"
                 autoComplete="new-password"
@@ -186,7 +186,7 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
-                id="outlined-password-input2"
+                id="Confirm_Password"
                 label="Confirm Password"
                 type="password"
                 autoComplete="new-password"
