@@ -52,16 +52,16 @@ export default function SignUp() {
         };
         axios.post('http://localhost:8090/api/v1/user/signup', userData)
             .then(response => {
-        const message = response.data.data; // this is massage.getObject() on success
-        alert(message);                     // show success message in alert
-        console.log("Signup successful:", message);
-        navigate('/');
-    })
-    .catch(error => {
-        const errorMessage = error.response?.data?.data || "Signup failed.";
-        alert(errorMessage);                // show error message in alert
-        console.error("Signup failed:", errorMessage);
-    });
+            const message = response.data.data; // this is massage.getObject() on success
+            alert(message);                     // show success message in alert
+            console.log("Signup successful:", message);
+            navigate('/');
+            })
+            .catch(error => {
+                const errorMessage = error.response?.data?.data || "Signup failed.";
+                alert(errorMessage);                // show error message in alert
+                console.error("Signup failed:", errorMessage);
+            });
         
     };
 
