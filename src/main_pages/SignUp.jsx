@@ -6,30 +6,62 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
+import { useState } from 'react';
+
 
 
 export default function SignUp() {
     const navigate = useNavigate();
-    const [role, setRole] = React.useState('');
-    const [gender, setGender] = React.useState('');
 
+    // State for all input fields
+    const [regNo, setRegNo] = useState('');
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
+    const [email, setEmail] = useState('');
+    const [contactNo, setContactNo] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('');
+    const [gender, setGender] = useState('');
+
+    // Dropdown handlers
     const handleChangeRole = (event) => {
         setRole(event.target.value);
     };
-     const handleChangeGender = (event) => {
+    const handleChangeGender = (event) => {
         setGender(event.target.value);
     };
 
+
+
     const handleSignUp = () => {
-        axios.get('http://localhost:8090/api/v1/home/get')
+        const userData = {
+            //id: 0, // let backend auto-generate if needed
+            regNo: regNo,
+            f_Name: fName,
+            l_Name: lName,
+            email: email,
+            contactNo: contactNo,
+            role: role,
+            gender: gender,
+            password: password
+        };
+        axios.post('http://localhost:8090/api/v1/user/signup', userData)
             .then(response => {
-                console.log('Data received:', response.data);
-                // You can handle the response (e.g., navigate, show success message, etc.)
+                console.log("Signup successful:", response.data);
+                alert("Signup successful!");
+                navigate('/');
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
-                // Optionally show an error message
+                console.error("Signup failed:", error.response?.data || error.message);
+                alert("Signup failed!");
             });
+
+
+
+
+        
+            
     };
   return (
     <Box
@@ -61,6 +93,7 @@ export default function SignUp() {
                     id="outlined-search" 
                     label="First Name" 
                     type="search" 
+                    onChange={(e) => setFName(e.target.value)}
                 />
                 <TextField 
                     sx={{width:'49%'}}
@@ -68,7 +101,8 @@ export default function SignUp() {
                     margin='normal'
                     id="outlined-search" 
                     label="Last Name" 
-                    type="search" 
+                    type="search"
+                    onChange={(e) => setLName(e.target.value)} 
                 />
 
             </Box>
@@ -78,9 +112,19 @@ export default function SignUp() {
                 fullWidth
                 size='small'
                 margin='dense'
+                id="outlined-search_reg" 
+                label="Reg No" 
+                type="search" 
+                onChange={(e) => setRegNo(e.target.value)}
+            />
+            <TextField 
+                fullWidth
+                size='small'
+                margin='dense'
                 id="outlined-search" 
                 label="Email Address" 
                 type="search" 
+                onChange={(e) => setEmail(e.target.value)}
             />
             <TextField 
                 fullWidth
@@ -89,6 +133,7 @@ export default function SignUp() {
                 id="outlined-search" 
                 label="Contact Number" 
                 type="search" 
+                onChange={(e) => setContactNo(e.target.value)}
             />
             {/* Specialize */}
             <Box marginTop='8px' marginBottom='5px'>
@@ -135,6 +180,7 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
             />
             <TextField
                 fullWidth
@@ -144,6 +190,7 @@ export default function SignUp() {
                 label="Confirm Password"
                 type="password"
                 autoComplete="new-password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <Box sx={{ marginTop: '20px' }}>
                 <Button fullWidth variant="contained" onClick={handleSignUp}>
