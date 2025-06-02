@@ -50,25 +50,28 @@ export default function SignUp() {
             gender: gender,
             password: password
         };
+
         axios.post('http://localhost:8090/api/v1/user/signup', userData)
             .then(response => {
-                console.log("Signup successful:", response.data);
-                alert("Signup successful!");
-                navigate('/');
+            const message = response.data.data; 
+            alert(message);                     
+            console.log("Signup successful:", message);
+            navigate('/');
             })
             .catch(error => {
-                console.error("Signup failed:", error.response?.data || error.message);
-                alert("Signup failed!");
-            });
+                const errorMessage = error.response?.data?.data || "Signup failed.";
+                alert(errorMessage);                
+                console.error("Signup failed:", errorMessage);
+        });
         
     };
 
   return (
     <Box
-    display='flex'
-    justifyContent='center'   //    horizontal alighnment
-    alignItems='center'       //    vertical alighnment
-    minHeight="100vh"         //    vertical alighnment
+        display='flex'
+        justifyContent='center'   //    horizontal alighnment
+        alignItems='center'       //    vertical alighnment
+        minHeight="100vh"         //    vertical alighnment
     >
         {/* Form Area */}
         <Box
