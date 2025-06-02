@@ -17,9 +17,11 @@
     "@mui/material": "^7.1.0",
     "@mui/styled-engine-sc": "^7.1.0",
     "axios": "^1.9.0",
+    "chance": "^1.1.13",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1",
+    "react-virtuoso": "^4.12.8",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {

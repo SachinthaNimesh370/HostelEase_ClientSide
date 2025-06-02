@@ -34,7 +34,7 @@ export default function SignIn() {
                 console.log("role is : " + role)
 
                 console.log("SignIn successful:", message);
-                navigate('/drawer');
+                navigate('/drawer/dashboard');
         })
         .catch(error => {
             const errorMessage = error.response?.data?.data || "Signin failed.";
