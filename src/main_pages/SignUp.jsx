@@ -50,27 +50,28 @@ export default function SignUp() {
             gender: gender,
             password: password
         };
+
         axios.post('http://localhost:8090/api/v1/user/signup', userData)
             .then(response => {
-            const message = response.data.data; // this is massage.getObject() on success
-            alert(message);                     // show success message in alert
+            const message = response.data.data; 
+            alert(message);                     
             console.log("Signup successful:", message);
             navigate('/');
             })
             .catch(error => {
                 const errorMessage = error.response?.data?.data || "Signup failed.";
-                alert(errorMessage);                // show error message in alert
+                alert(errorMessage);                
                 console.error("Signup failed:", errorMessage);
-            });
+        });
         
     };
 
   return (
     <Box
-    display='flex'
-    justifyContent='center'   //    horizontal alighnment
-    alignItems='center'       //    vertical alighnment
-    minHeight="100vh"         //    vertical alighnment
+        display='flex'
+        justifyContent='center'   //    horizontal alighnment
+        alignItems='center'       //    vertical alighnment
+        minHeight="100vh"         //    vertical alighnment
     >
         {/* Form Area */}
         <Box
