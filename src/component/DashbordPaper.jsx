@@ -29,18 +29,20 @@ export default function DashbordPaper() {
                     '& > :not(style)': {
                     m: 1,
                     width: 220,
-                    height: 130,   
+                    height: 130, 
+                      
                 },
 
                 }}
             >
-                <Paper elevation={3} sx={{backgroundColor:'#FFE2E5'}}>
+                <Paper elevation={3} sx={{backgroundColor:'#FFE2E5', }} >
 
                     {/* Title */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'15px', fontSize:'18px',color:'#FA5A7D',fontWeight:'600'}}
+                    
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'15px', fontSize:'18px',color:'#FA5A7D',fontWeight:'600'}}
                     
                     >
                     Students
@@ -48,9 +50,9 @@ export default function DashbordPaper() {
 
                     {/* Content */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'8px', fontSize:'30px',color:'#FA5A7D',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'8px', fontSize:'30px',color:'#FA5A7D',fontWeight:'600'}}
                     >
                     20
                     </Box>
@@ -59,19 +61,19 @@ export default function DashbordPaper() {
 
                     {/* Title */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'15px', fontSize:'18px',color:'#FF947A',fontWeight:'600'}}
-                    
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'15px', fontSize:'18px',color:'#FF947A',fontWeight:'600'}}
+                        
                     >
                     Available Rooms
                     </Box>
 
                     {/* Content */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'8px', fontSize:'30px',color:'#FF947A',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'8px', fontSize:'30px',color:'#FF947A',fontWeight:'600'}}
                     >
                     20
                     </Box>
@@ -80,9 +82,9 @@ export default function DashbordPaper() {
 
                     {/* Title */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'15px', fontSize:'18px',color:'#3CD856',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'15px', fontSize:'18px',color:'#3CD856',fontWeight:'600'}}
                     
                     >
                     Complains
@@ -90,9 +92,9 @@ export default function DashbordPaper() {
 
                     {/* Content */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'8px', fontSize:'30px',color:'#3CD856',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'8px', fontSize:'30px',color:'#3CD856',fontWeight:'600'}}
                     >
                     20
                     </Box>
@@ -101,9 +103,9 @@ export default function DashbordPaper() {
 
                     {/* Title */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'15px', fontSize:'18px',color:'#BF83FF',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'15px', fontSize:'18px',color:'#BF83FF',fontWeight:'600'}}
                     
                     >
                     Late Payment
@@ -111,9 +113,9 @@ export default function DashbordPaper() {
 
                     {/* Content */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'8px', fontSize:'30px',color:'#BF83FF',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'8px', fontSize:'30px',color:'#BF83FF',fontWeight:'600'}}
                     >
                     20
                     </Box>
@@ -122,9 +124,9 @@ export default function DashbordPaper() {
 
                     {/* Title */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'15px', fontSize:'18px',color:'red',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'15px', fontSize:'18px',color:'red',fontWeight:'600'}}
                     
                     >
                     Visitors Count
@@ -132,9 +134,9 @@ export default function DashbordPaper() {
 
                     {/* Content */}
                     <Box
-                    display='flex'
-                    justifyContent='center'
-                    sx={{margin:'8px', fontSize:'30px',color:'red',fontWeight:'600'}}
+                        display='flex'
+                        justifyContent='center'
+                        sx={{margin:'8px', fontSize:'30px',color:'red',fontWeight:'600'}}
                     >
                     20
                     </Box>

@@ -25,7 +25,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'; // ✅ for navigation + current path
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
 
 const drawerWidth = 240;
 
@@ -159,8 +159,8 @@ export default function DrawerLayout() {
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
-                  backgroundColor: isActive(item.path) ? '#5D5FEF' : 'inherit',
-                  color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  backgroundColor: isActive(item.path) ? '#2074d4' : 'inherit',
+                  color: isActive(item.path) ? '#2074d4' : 'inherit',
                   '&:hover': {
                     backgroundColor: isActive(item.path) ? 'primary.dark' : 'action.hover',
                   },
@@ -171,7 +171,7 @@ export default function DrawerLayout() {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
-                    color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                    color: isActive(item.path) ? '#2074d4' : 'inherit',
                   }}
                 >
                   {item.icon}
@@ -193,10 +193,10 @@ export default function DrawerLayout() {
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
-                  backgroundColor: isActive(item.path) ? '#5D5FEF' : 'inherit',
-                  color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                  backgroundColor: isActive(item.path) ? '#2074d4' : 'inherit',
+                  color: isActive(item.path) ? '#2074d4' : 'inherit',
                   '&:hover': {
-                    backgroundColor: isActive(item.path) ? '#5D5FEF' : 'action.hover',
+                    backgroundColor: isActive(item.path) ? '#2074d4' : 'action.hover',
                   },
                 }}
               >
@@ -205,7 +205,7 @@ export default function DrawerLayout() {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
-                    color: isActive(item.path) ? '#5D5FEF' : 'inherit',
+                    color: isActive(item.path) ? '#2074d4' : 'inherit',
                   }}
                 >
                   {item.icon}
