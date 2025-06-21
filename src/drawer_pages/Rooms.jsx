@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
 
 const headers = [
   'Rid',
@@ -12,8 +13,19 @@ const headers = [
   'WardenId'
 ];
 
+// Example: 15% for Rid, 15% for RoomNo, 20% for Type, 10% for Ac, 20% for CurrentCount, 20% for WardenId
+const colWidths = ['10%', '15%', '15%', '10%', '20%', '30%'];
+
 export default function Room() {
   const [rows, setRows] = useState([]);
+  const [selectedRow, setSelectedRow] = useState({
+    Rid: '',
+    RoomNo: '',
+    Type: '',
+    Ac: '',
+    CurrentCount: '',
+    WardenId: ''
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -39,10 +51,33 @@ export default function Room() {
       });
   }, []);
 
+  // Handler for row click
+  const handleRowClick = (row) => {
+    setSelectedRow(row);
+  };
+
   return (
-    <Box>
-      <Box>This Is Room Page</Box>
-      <TableTemplate headers={headers} rows={rows} />
+    <Box display="flex" flexDirection="row" gap={2}>
+      <TableTemplate
+        headers={headers}
+        rows={rows}
+        tableWidth={1100}
+        tableHeight={650}
+        colWidths={colWidths}
+        onRowClick={handleRowClick}
+      />
+      <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
+        {headers.map((header, idx) => (
+          <TextField
+            key={header}
+            label={header}
+            value={selectedRow[header]}
+            InputProps={{ readOnly: true }}
+            variant="outlined"
+            size="small"
+          />
+        ))}
+      </Box>
     </Box>
   )
 }
