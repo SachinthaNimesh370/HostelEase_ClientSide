@@ -13,9 +13,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#f8f4f4', 
     color: "#120b4f",
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+    textAlign: 'center',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    textAlign: 'center',
   },
 }));
 
@@ -35,15 +40,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 /*
   headers: array of strings,
   rows: array of objects (keys match headers)
+  tableWidth: string or number (optional)
+  tableHeight: string or number (optional)
+  colWidths: array of strings (percentages, e.g. ['10%', '20%', ...])
+  onRowClick: function (optional)
 */
-export default function TableTemplate({ headers = [], rows = [] }) {
+export default function TableTemplate({ headers = [], rows = [], tableWidth = 700, tableHeight = 400, colWidths = [], onRowClick }) {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <TableContainer component={Paper} sx={{ maxHeight: tableHeight, width: tableWidth, overflowX: 'hidden' }}>
+      <Table stickyHeader sx={{ width: '100%', tableLayout: 'fixed' }} aria-label="customized table">
+        <colgroup>
+          {headers.map((header, idx) => (
+            <col key={header + idx} style={{ width: colWidths[idx] || `${100 / headers.length}%` }} />
+          ))}
+        </colgroup>
         <TableHead>
           <TableRow>
             {headers.map((header, idx) => (
-              <StyledTableCell key={header + idx} align={idx === 0 ? 'left' : 'right'}>
+              <StyledTableCell key={header + idx} align="center">
                 {header}
               </StyledTableCell>
             ))}
@@ -51,9 +65,9 @@ export default function TableTemplate({ headers = [], rows = [] }) {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <StyledTableRow key={i}>
+            <StyledTableRow key={i} onClick={onRowClick ? () => onRowClick(row) : undefined}>
               {headers.map((header, idx) => (
-                <StyledTableCell key={header + i} align={idx === 0 ? 'left' : 'right'}>
+                <StyledTableCell key={header + i} align="center">
                   {row[header]}
                 </StyledTableCell>
               ))}
