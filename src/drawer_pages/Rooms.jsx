@@ -128,6 +128,31 @@ export default function Room() {
     }
   };
 
+  // Handler for Delete button
+  const handleDelete = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      room_id: selectedRow.Rid,
+      roomNo: '',
+      type: '',
+      ac: null,
+      currentCount: '',
+      warden_id: ''
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/room/deleteroom', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchRooms();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
   // Handler for text field change
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
@@ -157,7 +182,7 @@ export default function Room() {
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
           <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="contained" color="error">Delete</Button>
+          <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
           <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
         </Box>
       </Box>
