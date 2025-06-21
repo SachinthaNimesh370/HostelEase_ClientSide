@@ -16,6 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
@@ -24,8 +25,12 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
+import Admin from '../drawer_pages/Admin';
+import Warden from '../drawer_pages/Warden';
 
 const drawerWidth = 240;
 
@@ -111,8 +116,11 @@ export default function DrawerLayout() {
 
   const drawerItems2 = [
     { text: 'Student', icon: <SchoolIcon />, path: 'students' },
+    { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
+    { text: 'Warden', icon: <SupervisorAccountIcon />, path: 'warden' },
     { text: 'Visitors Log', icon: <PeopleIcon />, path: 'visitors' },
     { text: 'Notification', icon: <NotificationsIcon />, path: 'notification' },
+    
   ];
 
   const handleNavigate = (path) => {
@@ -120,6 +128,12 @@ export default function DrawerLayout() {
   };
 
   const isActive = (path) => location.pathname === `/drawer/${path}`;
+
+  // Add sign out handler
+  const handleSignOut = () => {
+    localStorage.clear(); // Clear all local storage including token
+    navigate('/', { replace: true }); // Use replace to prevent back navigation
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -138,6 +152,10 @@ export default function DrawerLayout() {
           <Typography variant="h6" noWrap component="div">
             Hostel Management
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="inherit" onClick={handleSignOut}>
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -183,7 +201,7 @@ export default function DrawerLayout() {
         </List>
 
         <Divider />
-        <List>
+        <List sx={{ flexGrow: 1 }}>
           {drawerItems2.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -215,6 +233,20 @@ export default function DrawerLayout() {
             </ListItem>
           ))}
         </List>
+        {/* Sign Out as a drawer item at the bottom */}
+        <Box sx={{ flexGrow: 0, mt: 'auto', mb: 2 }}>
+          <Divider />
+          <List>
+            <ListItem disablePadding sx={{ display: 'block' }}>
+              <ListItemButton onClick={handleSignOut}>
+                <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign Out" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

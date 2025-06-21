@@ -9,6 +9,8 @@ import Payment from './drawer_pages/Payment';
 import Notification from './drawer_pages/Notification';
 import Dashboard from './drawer_pages/Dashboard';
 import Complain from './drawer_pages/Complain';
+import Admin from './drawer_pages/Admin';
+import Warden from './drawer_pages/Warden';
 
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
 
         {/* Nested route layout for Drawer pages */}
-        <Route path="/drawer" element={<DrawerLayout />}>
+        <Route path="/drawer/*" element={<DrawerLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="complain" element={<Complain />} />
@@ -26,6 +28,8 @@ function App() {
           <Route path="students" element={<Student />} />
           <Route path="visitors" element={<VisitorsLog />} />
           <Route path="notification" element={<Notification />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="warden" element={<Warden />} />
         </Route>
       </Routes>
     </BrowserRouter>
