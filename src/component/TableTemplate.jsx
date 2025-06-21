@@ -37,14 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-/*
-  headers: array of strings,
-  rows: array of objects (keys match headers)
-  tableWidth: string or number (optional)
-  tableHeight: string or number (optional)
-  colWidths: array of strings (percentages, e.g. ['10%', '20%', ...])
-  onRowClick: function (optional)
-*/
+
 export default function TableTemplate({ headers = [], rows = [], tableWidth = 700, tableHeight = 400, colWidths = [], onRowClick }) {
   return (
     <TableContainer component={Paper} sx={{ maxHeight: tableHeight, width: tableWidth, overflowX: 'hidden' }}>

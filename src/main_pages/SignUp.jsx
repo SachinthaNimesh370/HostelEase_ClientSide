@@ -69,9 +69,9 @@ export default function SignUp() {
   return (
     <Box
         display='flex'
-        justifyContent='center'   //    horizontal alighnment
-        alignItems='center'       //    vertical alighnment
-        minHeight="100vh"         //    vertical alighnment
+        justifyContent='center'   
+        alignItems='center'       
+        minHeight="100vh"         
     >
         {/* Form Area */}
         <Box

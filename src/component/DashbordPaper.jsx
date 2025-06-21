@@ -11,9 +11,9 @@ export default function DashbordPaper() {
             
             sx={{
             
-            boxShadow: 3, // elevation-like effect
-            borderRadius: 1, // optional: soft corners like Paper
-            p: 2, // shorthand for padding
+            boxShadow: 3, 
+            borderRadius: 1, 
+            p: 2, 
             
             
             }}

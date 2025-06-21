@@ -24,10 +24,10 @@ export default function SignIn() {
             .then(response => {
                 const message = response.data;
 
-                const token = response.data.data.massage; // JWT token
-                const role = response.data.role.role;     // User role
+                const token = response.data.data.massage; 
+                const role = response.data.role.role;     
 
-                // Store in localStorage
+                
                 localStorage.setItem("token", token);
                 localStorage.setItem("role", role);
                 console.log("token is : " + token)
