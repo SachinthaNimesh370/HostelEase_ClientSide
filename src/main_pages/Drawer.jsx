@@ -102,7 +102,7 @@ export default function DrawerLayout() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ to check current path
+  const location = useLocation(); 
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
@@ -129,10 +129,10 @@ export default function DrawerLayout() {
 
   const isActive = (path) => location.pathname === `/drawer/${path}`;
 
-  // Add sign out handler
+
   const handleSignOut = () => {
-    localStorage.clear(); // Clear all local storage including token
-    navigate('/', { replace: true }); // Use replace to prevent back navigation
+    localStorage.clear(); 
+    navigate('/', { replace: true }); 
   };
 
   return (
