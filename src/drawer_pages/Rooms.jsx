@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const headers = [
   'Rid',
@@ -13,8 +14,8 @@ const headers = [
   'WardenId'
 ];
 
-// Example: 15% for Rid, 15% for RoomNo, 20% for Type, 10% for Ac, 20% for CurrentCount, 20% for WardenId
-const colWidths = ['10%', '15%', '15%', '10%', '20%', '30%'];
+// Adjusted widths to total 100% and avoid horizontal scroll
+const colWidths = ['12%', '16%', '18%', '12%', '20%', '22%'];
 
 export default function Room() {
   const [rows, setRows] = useState([]);
@@ -28,6 +29,10 @@ export default function Room() {
   });
 
   useEffect(() => {
+    fetchRooms();
+  }, []);
+
+  const fetchRooms = () => {
     const token = localStorage.getItem('token');
     axios.get('http://localhost:8090/api/v1/room/getallroom', {
       headers: {
@@ -49,11 +54,53 @@ export default function Room() {
       .catch(err => {
         setRows([]);
       });
-  }, []);
+  };
 
   // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
+  };
+
+  // Handler for Clear button
+  const handleClear = () => {
+    setSelectedRow({
+      Rid: '',
+      RoomNo: '',
+      Type: '',
+      Ac: '',
+      CurrentCount: '',
+      WardenId: ''
+    });
+  };
+
+  // Handler for Add button
+  const handleAdd = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      room_id: selectedRow.Rid,
+      roomNo: selectedRow.RoomNo,
+      type: selectedRow.Type,
+      ac: selectedRow.Ac === 'Yes' || selectedRow.Ac === true,
+      currentCount: selectedRow.CurrentCount,
+      warden_id: selectedRow.WardenId
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/room/newroom', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchRooms();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
+  // Handler for text field change
+  const handleFieldChange = (header) => (event) => {
+    setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
   return (
@@ -61,7 +108,7 @@ export default function Room() {
       <TableTemplate
         headers={headers}
         rows={rows}
-        tableWidth={1100}
+        tableWidth={1080}
         tableHeight={650}
         colWidths={colWidths}
         onRowClick={handleRowClick}
@@ -72,11 +119,17 @@ export default function Room() {
             key={header}
             label={header}
             value={selectedRow[header]}
-            InputProps={{ readOnly: true }}
+            onChange={handleFieldChange(header)}
             variant="outlined"
             size="small"
           />
         ))}
+        <Box display="flex" flexDirection="column" gap={1} mt={2}>
+          <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
+          <Button variant="contained" color="warning">Update</Button>
+          <Button variant="contained" color="error">Delete</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+        </Box>
       </Box>
     </Box>
   )
