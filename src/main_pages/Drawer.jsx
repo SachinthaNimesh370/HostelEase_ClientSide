@@ -153,9 +153,6 @@ export default function DrawerLayout() {
             Hostel Management
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton color="inherit" onClick={handleSignOut}>
-            <LogoutIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
 
