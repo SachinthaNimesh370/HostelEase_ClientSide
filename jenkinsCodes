@@ -1,0 +1,37 @@
+pipeline {
+    agent any 
+    
+    stages { 
+        stage('SCM Checkout') {
+            steps {
+                retry(3) {
+                    git branch: 'main', url: 'https://github.com/SachinthaNimesh370/HostelEase_ClientSide.git'
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {  
+                bat 'docker build -t sachinthanimesh/hostel_ease_client:%BUILD_NUMBER% .'
+            }
+        }
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'hostel_ease_client_password', variable: 'hostel_ease_client_password')]) {
+                    script {
+                        bat "docker login -u sachinthanimesh -p %hostel_ease_client_password%"
+                    }
+                }
+            }
+        }
+        stage('Push Image') {
+            steps {
+                bat 'docker push sachinthanimesh/hostel_ease_client:%BUILD_NUMBER%'
+            }
+        }
+    }
+    post {
+        always {
+            bat 'docker logout'
+        }
+    }
+}
