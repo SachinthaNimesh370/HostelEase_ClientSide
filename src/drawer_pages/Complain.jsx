@@ -115,10 +115,34 @@ export default function Complain() {
     }
   };
 
-  // Handler for Delete button (dummy, implement as needed)
-  const handleDelete = () => {
-    // Implement delete logic here
-    handleClear();
+  // Handler for Delete button
+  const handleDelete = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      complain_id: selectedRow.complain_id,
+      catagory: selectedRow.catagory,
+      content: selectedRow.content,
+      date: selectedRow.date,
+      time: selectedRow.time,
+      status: selectedRow.status,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await fetch('http://localhost:8090/api/v1/complain/deletecomplain', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      // Refresh table and clear fields
+      await fetchComplains();
+      handleClear();
+    } catch (error) {
+      // Handle error as needed
+    }
   };
 
   return (
