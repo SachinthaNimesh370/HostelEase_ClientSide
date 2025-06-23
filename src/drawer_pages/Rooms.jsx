@@ -164,7 +164,7 @@ export default function Room() {
         headers={headers}
         rows={rows}
         tableWidth={1080}
-        tableHeight={650}
+        tableHeight={700}
         colWidths={colWidths}
         onRowClick={handleRowClick}
       />

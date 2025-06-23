@@ -151,7 +151,7 @@ export default function Complain() {
         headers={headers}
         rows={rows}
         tableWidth={1080}
-        tableHeight={750}
+        tableHeight={700}
         onRowClick={handleRowClick}
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
