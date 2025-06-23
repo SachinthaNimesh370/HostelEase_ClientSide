@@ -85,7 +85,7 @@ export default function Payment() {
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      payment_id: selectedRow.payment_id,
+      Payment_id: selectedRow.payment_id,
       amount: parseFloat(selectedRow.amount),
       description: selectedRow.description,
       date: selectedRow.date,
@@ -135,10 +135,28 @@ export default function Payment() {
 
   // Handler for Delete button
   const handleDelete = async () => {
-    // Implement the logic for deleting a payment here
-    // Example: POST to /api/v1/payment/deletepayment
-    // After success, refresh table and clear fields
-    handleClear();
+    const token = localStorage.getItem('token');
+    const payload = {
+      payment_id: selectedRow.payment_id,
+      amount: '',
+      description: '',
+      date: '',
+      status: '',
+      student_id: '',
+      warden_id: ''
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/payment/deletepayment', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchPayments();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
   };
 
   return (
