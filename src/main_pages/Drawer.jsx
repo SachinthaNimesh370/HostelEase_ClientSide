@@ -24,6 +24,7 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import PaymentIcon from '@mui/icons-material/Payment';
 import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
+import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -112,13 +113,14 @@ export default function DrawerLayout() {
     { text: 'Rooms', icon: <MeetingRoomIcon />, path: 'rooms' },
     { text: 'Complain', icon: <ReportProblemIcon />, path: 'complain' },
     { text: 'Payment', icon: <PaymentIcon />, path: 'payment' },
+    { text: 'Visitors Log', icon: <Diversity3RoundedIcon />, path: 'visitors' },
   ];
 
   const drawerItems2 = [
     { text: 'Student', icon: <SchoolIcon />, path: 'students' },
     { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
     { text: 'Warden', icon: <SupervisorAccountIcon />, path: 'warden' },
-    { text: 'Visitors Log', icon: <PeopleIcon />, path: 'visitors' },
+    
     { text: 'Notification', icon: <NotificationsIcon />, path: 'notification' },
     
   ];
