@@ -38,7 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function TableTemplate({ headers = [], rows = [], tableWidth = 1080, tableHeight = 650, colWidths = [], onRowClick }) {
+export default function TableTemplate({ headers = [], rows = [], tableWidth = 1080, tableHeight = 700, colWidths = [], onRowClick }) {
   return (
     <TableContainer component={Paper} sx={{ maxHeight: tableHeight, width: tableWidth, overflowX: 'hidden' }}>
       <Table stickyHeader sx={{ width: '100%', tableLayout: 'fixed' }} aria-label="customized table">
