@@ -89,6 +89,90 @@ export default function Visitors() {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
+  // Handler for Add button
+  const handleAdd = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      visitor_id: selectedRow.visitor_id,
+      nic: selectedRow.nic,
+      name: selectedRow.name,
+      date: selectedRow.date,
+      entryTime: selectedRow.entryTime,
+      exitTime: selectedRow.exitTime,
+      state: selectedRow.state,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/visitor/newvisitor', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchVisitors();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
+  // Handler for Update button
+  const handleUpdate = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      visitor_id: selectedRow.visitor_id,
+      nic: selectedRow.nic,
+      name: selectedRow.name,
+      date: selectedRow.date,
+      entryTime: selectedRow.entryTime,
+      exitTime: selectedRow.exitTime,
+      state: selectedRow.state,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/visitor/updatevisitor', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchVisitors();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
+  // Handler for Delete button
+  const handleDelete = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      visitor_id: selectedRow.visitor_id,
+      nic: '',
+      name: '',
+      date: '',
+      entryTime: '',
+      exitTime: '',
+      state: '',
+      student_id: '',
+      warden_id: ''
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/visitor/deletevisitor', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchVisitors();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -111,9 +195,9 @@ export default function Visitors() {
           />
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="primary">Add</Button>
-          <Button variant="contained" color="warning">Update</Button>
-          <Button variant="contained" color="error">Delete</Button>
+          <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
+          <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
           <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
         </Box>
       </Box>
