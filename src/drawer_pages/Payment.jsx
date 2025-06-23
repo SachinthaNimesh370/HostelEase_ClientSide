@@ -83,18 +83,54 @@ export default function Payment() {
 
   // Handler for Add button
   const handleAdd = async () => {
-    // Implement the logic for adding a new payment here
-    // Example: POST to /api/v1/payment/newpayment
-    // After success, refresh table and clear fields
-    handleClear();
+    const token = localStorage.getItem('token');
+    const payload = {
+      payment_id: selectedRow.payment_id,
+      amount: parseFloat(selectedRow.amount),
+      description: selectedRow.description,
+      date: selectedRow.date,
+      status: selectedRow.status,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/payment/newpayment', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchPayments();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
   };
 
   // Handler for Update button
   const handleUpdate = async () => {
-    // Implement the logic for updating a payment here
-    // Example: POST to /api/v1/payment/updatepayment
-    // After success, refresh table and clear fields
-    handleClear();
+    const token = localStorage.getItem('token');
+    const payload = {
+      payment_id: selectedRow.payment_id,
+      amount: parseFloat(selectedRow.amount),
+      description: selectedRow.description,
+      date: selectedRow.date,
+      status: selectedRow.status,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/payment/updatepayment', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchPayments();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
   };
 
   // Handler for Delete button
