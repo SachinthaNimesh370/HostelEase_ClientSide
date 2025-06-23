@@ -28,34 +28,36 @@ export default function Complain() {
     warden_id: ''
   });
 
-  useEffect(() => {
-    const fetchComplains = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:8090/api/v1/complain/getallcomplain', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        const data = await response.json();
-        if (data.code === 200 && data.data && data.data.massage) {
-          const mappedRows = data.data.massage.map(item => ({
-            'complain_id': item.complain_id || '',
-            'student_id': item.student?.student_id || '',
-            'catagory': item.catagory || '',
-            'content': item.content || '',
-            'date': item.date || '',
-            'time': item.time || '',
-            'status': item.status || '',
-            'warden_id': item.warden?.warden_id || '',
-          }));
-          setRows(mappedRows);
+  // Move fetchComplains outside useEffect so it can be called after update
+  const fetchComplains = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8090/api/v1/complain/getallcomplain', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
-      } catch (error) {
-        setRows([]);
+      });
+      const data = await response.json();
+      if (data.code === 200 && data.data && data.data.massage) {
+        const mappedRows = data.data.massage.map(item => ({
+          'complain_id': item.complain_id || '',
+          'student_id': item.student?.student_id || '',
+          'catagory': item.catagory || '',
+          'content': item.content || '',
+          'date': item.date || '',
+          'time': item.time || '',
+          'status': item.status || '',
+          'warden_id': item.warden?.warden_id || '',
+        }));
+        setRows(mappedRows);
       }
-    };
+    } catch (error) {
+      setRows([]);
+    }
+  };
+
+  useEffect(() => {
     fetchComplains();
   }, []);
 
@@ -83,10 +85,34 @@ export default function Complain() {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button (dummy, implement as needed)
-  const handleUpdate = () => {
-    // Implement update logic here
-    handleClear();
+  // Handler for Update button
+  const handleUpdate = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      complain_id: selectedRow.complain_id,
+      catagory: selectedRow.catagory,
+      content: selectedRow.content,
+      date: selectedRow.date,
+      time: selectedRow.time,
+      status: selectedRow.status,
+      student_id: selectedRow.student_id,
+      warden_id: selectedRow.warden_id
+    };
+    try {
+      await fetch('http://localhost:8090/api/v1/complain/updatecomplain', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      // Refresh table and clear fields
+      await fetchComplains();
+      handleClear();
+    } catch (error) {
+      // Handle error as needed
+    }
   };
 
   // Handler for Delete button (dummy, implement as needed)
