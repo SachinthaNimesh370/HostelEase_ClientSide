@@ -152,6 +152,7 @@ export default function Complain() {
         rows={rows}
         tableWidth={1080}
         tableHeight={700}
+        colWidths={["10%", "10%", "15%", "24%", "12%", "9%", "10%", "10%"]}
         onRowClick={handleRowClick}
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
