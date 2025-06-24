@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
   'visitor_id',
@@ -104,16 +105,17 @@ export default function Visitors() {
       warden_id: selectedRow.warden_id
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/visitor/newvisitor', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/visitor/newvisitor', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchVisitors();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -132,16 +134,17 @@ export default function Visitors() {
       warden_id: selectedRow.warden_id
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/visitor/updatevisitor', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/visitor/updatevisitor', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchVisitors();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -160,16 +163,17 @@ export default function Visitors() {
       warden_id: ''
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/visitor/deletevisitor', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/visitor/deletevisitor', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchVisitors();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -185,14 +189,32 @@ export default function Visitors() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          <TextField
-            key={header}
-            label={header}
-            value={selectedRow[header]}
-            onChange={handleFieldChange(header)}
-            variant="outlined"
-            size="small"
-          />
+          header === 'state' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Approved">Approved</MenuItem>
+            </TextField>
+          ) : (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              InputProps={{
+                readOnly: header === 'visitor_id'
+              }}
+            />
+          )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
