@@ -6,11 +6,12 @@ import VisitorsLog from './drawer_pages/VisitorsLog';
 import Student from './drawer_pages/Student';
 import Rooms from './drawer_pages/Rooms';
 import Payment from './drawer_pages/Payment';
-import Notification from './drawer_pages/Notification';
+
 import Dashboard from './drawer_pages/Dashboard';
 import Complain from './drawer_pages/Complain';
 import Admin from './drawer_pages/Admin';
 import Warden from './drawer_pages/Warden';
+import Users from './drawer_pages/Users';
 
 function App() {
   return (
@@ -27,9 +28,9 @@ function App() {
           <Route path="payment" element={<Payment />} />
           <Route path="students" element={<Student />} />
           <Route path="visitors" element={<VisitorsLog />} />
-          <Route path="notification" element={<Notification />} />
           <Route path="admin" element={<Admin />} />
           <Route path="warden" element={<Warden />} />
+          <Route path="users" element={<Users />} /> 
         </Route>
       </Routes>
     </BrowserRouter>
