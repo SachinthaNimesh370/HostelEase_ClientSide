@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
   'payment_id',
@@ -85,25 +86,26 @@ export default function Payment() {
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      Payment_id: selectedRow.payment_id,
+      PaymentId: selectedRow.payment_id ? Number(selectedRow.payment_id) : undefined,
       amount: parseFloat(selectedRow.amount),
       description: selectedRow.description,
       date: selectedRow.date,
       status: selectedRow.status,
       student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      wardenId: selectedRow.warden_id || ""
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/payment/newpayment', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/payment/newpayment', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchPayments();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -120,16 +122,17 @@ export default function Payment() {
       warden_id: selectedRow.warden_id
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/payment/updatepayment', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/payment/updatepayment', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchPayments();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -146,16 +149,17 @@ export default function Payment() {
       warden_id: ''
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/payment/deletepayment', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/payment/deletepayment', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchPayments();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -171,14 +175,35 @@ export default function Payment() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          <TextField
-            key={header}
-            label={header}
-            value={selectedRow[header]}
-            onChange={handleFieldChange(header)}
-            variant="outlined"
-            size="small"
-          />
+          header === 'status' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+              InputProps={{
+                readOnly: header === 'payment_id'
+              }}
+            >
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Approved">Approved</MenuItem>
+            </TextField>
+          ) : (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              InputProps={{
+                readOnly: header === 'payment_id'
+              }}
+            />
+          )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="primary" onClick={handleAdd}>New Payment</Button>
