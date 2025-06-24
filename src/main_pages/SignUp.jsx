@@ -152,7 +152,7 @@ export default function SignUp() {
                         onChange={handleChangeRole}
                     >
                         <MenuItem value={'Admin'}>Admin</MenuItem>
-                        <MenuItem value={'Worden'}>Worden</MenuItem>
+                        <MenuItem value={'Warden'}>Warden</MenuItem>
                         <MenuItem value={'Student'}>Student</MenuItem>
                     </Select>
                 </FormControl>

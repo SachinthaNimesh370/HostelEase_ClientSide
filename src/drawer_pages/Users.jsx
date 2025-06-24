@@ -121,6 +121,7 @@ export default function Users() {
         };
       });
       setRows(mappedUsers);
+      handleClear();
     } catch (err) {
       // Optionally handle error
     }
