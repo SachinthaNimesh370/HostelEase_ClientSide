@@ -85,6 +85,34 @@ export default function Warden() {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
+  // Handler for Update button
+  const handleUpdate = async () => {
+    const token = localStorage.getItem('token');
+    const payload = {
+      regNo: selectedRow.regNo,
+      f_Name: selectedRow.f_Name,
+      l_Name: selectedRow.l_Name,
+      email: selectedRow.email,
+      contactNo: selectedRow.contactNo,
+      role: selectedRow.role,
+      gender: selectedRow.gender,
+      state: selectedRow.state === 'true' || selectedRow.state === true,
+      password: '' // You may want to handle password update separately
+    };
+    try {
+      await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      fetchWardens();
+      handleClear();
+    } catch (err) {
+      // Handle error as needed
+    }
+  };
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -107,6 +135,7 @@ export default function Warden() {
           />
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
+          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
           <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
         </Box>
       </Box>
