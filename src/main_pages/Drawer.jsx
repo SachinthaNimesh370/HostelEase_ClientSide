@@ -17,6 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
@@ -117,12 +118,11 @@ export default function DrawerLayout() {
   ];
 
   const drawerItems2 = [
-    { text: 'Users', icon: <SchoolIcon />, path: 'users' },
+
     { text: 'Student', icon: <SchoolIcon />, path: 'students' },
+    { text: 'Warden', icon: <PersonRoundedIcon />, path: 'warden' },
     { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
-    { text: 'Warden', icon: <SupervisorAccountIcon />, path: 'warden' },
-    
-  
+    { text: 'Users', icon: <SupervisorAccountIcon />, path: 'users' },
     
   ];
 

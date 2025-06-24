@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TableTemplate from '../component/TableTemplate';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
   'complain_id',
@@ -157,14 +158,39 @@ export default function Complain() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header) => (
-          <TextField
-            key={header}
-            label={header}
-            value={selectedRow[header]}
-            onChange={handleFieldChange(header)}
-            variant="outlined"
-            size="small"
-          />
+          header === 'status' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Solved">Solved</MenuItem>
+            </TextField>
+          ) : (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              InputProps={{
+                readOnly: [
+                  'complain_id',
+                  'student_id',
+                  'catagory',
+                  'content',
+                  'date',
+                  'time'
+                ].includes(header)
+              }}
+            />
+          )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
