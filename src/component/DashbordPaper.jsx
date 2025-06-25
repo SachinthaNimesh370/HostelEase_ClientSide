@@ -2,150 +2,136 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Typography, Avatar, Divider, LinearProgress } from '@mui/material';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PieChartWithCenterLabel from './PieChatr';
 
 export default function DashbordPaper() {
   return (
-    <Box >
-        <Box
-            
-            sx={{
-            
-            boxShadow: 3, 
-            borderRadius: 1, 
-            p: 2, 
-            
-            
-            }}
-            padding={2}
-              
-        >   
-            <Typography display='flex' justifyContent='center' fontSize={22}>Today Summery</Typography>
-            <Box
-                justifyContent="space-between"
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                    m: 1,
-                    width: 220,
-                    height: 130, 
-                      
-                },
-
-                }}
-            >
-                <Paper elevation={3} sx={{backgroundColor:'#FFE2E5', }} >
-
-                    {/* Title */}
-                    <Box
-                    
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'15px', fontSize:'18px',color:'#FA5A7D',fontWeight:'600'}}
-                    
-                    >
-                    Students
-                    </Box>
-
-                    {/* Content */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'8px', fontSize:'30px',color:'#FA5A7D',fontWeight:'600'}}
-                    >
-                    20
-                    </Box>
-                </Paper>
-                <Paper elevation={3} sx={{backgroundColor:'#FFF4DE'}}>
-
-                    {/* Title */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'15px', fontSize:'18px',color:'#FF947A',fontWeight:'600'}}
-                        
-                    >
-                    Available Rooms
-                    </Box>
-
-                    {/* Content */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'8px', fontSize:'30px',color:'#FF947A',fontWeight:'600'}}
-                    >
-                    20
-                    </Box>
-                </Paper>
-                <Paper elevation={3} sx={{backgroundColor:'#DCFCE7'}}>
-
-                    {/* Title */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'15px', fontSize:'18px',color:'#3CD856',fontWeight:'600'}}
-                    
-                    >
-                    Complains
-                    </Box>
-
-                    {/* Content */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'8px', fontSize:'30px',color:'#3CD856',fontWeight:'600'}}
-                    >
-                    20
-                    </Box>
-                </Paper>
-                <Paper elevation={3} sx={{backgroundColor:'#F3E8FF'}}>
-
-                    {/* Title */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'15px', fontSize:'18px',color:'#BF83FF',fontWeight:'600'}}
-                    
-                    >
-                    Late Payment
-                    </Box>
-
-                    {/* Content */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'8px', fontSize:'30px',color:'#BF83FF',fontWeight:'600'}}
-                    >
-                    20
-                    </Box>
-                </Paper>
-                <Paper elevation={3} sx={{backgroundColor:'yellow'}}>
-
-                    {/* Title */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'15px', fontSize:'18px',color:'red',fontWeight:'600'}}
-                    
-                    >
-                    Visitors Count
-                    </Box>
-
-                    {/* Content */}
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        sx={{margin:'8px', fontSize:'30px',color:'red',fontWeight:'600'}}
-                    >
-                    20
-                    </Box>
-                </Paper>
-                
-            
-            
-            </Box>
+    <Box>
+      <Box
+        sx={{
+          boxShadow: 2,
+          borderRadius: 3,
+          p: 3,
+          background: 'linear-gradient(135deg, #fafcff 0%, #fafcff 100%)',
+          height: 715,
+        }}
+      >
+        <Typography display='flex' justifyContent='center' fontSize={40} fontWeight={700} color="#1976d2" mb={2}>
+          Hostel Ease
+        </Typography>
+        <Grid container spacing={2} justifyContent="space-between">
+          {/* Students */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFE2E5 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#FA5A7D', width: 48, height: 48, mb: 1 }}>
+                  <PeopleAltIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#FA5A7D" fontWeight={700}>Students</Typography>
+                <Typography fontSize={32} color="#FA5A7D" fontWeight={700}>20</Typography>
+                <LinearProgress variant="determinate" value={80} sx={{ width: '80%', mt: 1, bgcolor: '#ffe2e5', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+          {/* Rooms */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFF4DE 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#FF947A', width: 48, height: 48, mb: 1 }}>
+                  <MeetingRoomIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#FF947A" fontWeight={700}>Rooms</Typography>
+                <Typography fontSize={32} color="#FF947A" fontWeight={700}>20</Typography>
+                <LinearProgress variant="determinate" value={60} sx={{ width: '80%', mt: 1, bgcolor: '#fff4de', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+          
+          {/* Available Rooms */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #F3E8FF 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#BF83FF', width: 48, height: 48, mb: 1 }}>
+                  <TrendingUpIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#BF83FF" fontWeight={700}>Available Rooms</Typography>
+                <Typography fontSize={32} color="#BF83FF" fontWeight={700}>20</Typography>
+                <LinearProgress variant="determinate" value={50} sx={{ width: '80%', mt: 1, bgcolor: '#f3e8ff', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+          {/* Complaints Pending */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFF9C4 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#FFD600', width: 48, height: 48, mb: 1 }}>
+                  <ErrorOutlineIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#FFA000" fontWeight={700}>Complaints Pending</Typography>
+                <Typography fontSize={32} color="#FFA000" fontWeight={700}>20</Typography>
+                <LinearProgress variant="determinate" value={30} sx={{ width: '80%', mt: 1, bgcolor: '#fff9c4', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+          {/* Pending Visitors */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #E3F2FD 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#29B6F6', width: 48, height: 48, mb: 1 }}>
+                  <GroupAddIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#29B6F6" fontWeight={700}>Pending Visitors</Typography>
+                <Typography fontSize={32} color="#29B6F6" fontWeight={700}>20</Typography>
+                <LinearProgress variant="determinate" value={20} sx={{ width: '80%', mt: 1, bgcolor: '#e3f2fd', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+          {/* New: Approved Payments */}
+          <Grid item>
+            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #E0F7FA 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
+              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
+                <Avatar sx={{ bgcolor: '#00ACC1', width: 48, height: 48, mb: 1 }}>
+                  <CheckCircleIcon fontSize="large" />
+                </Avatar>
+                <Typography fontSize={18} color="#00ACC1" fontWeight={700}>Approved Payments</Typography>
+                <Typography fontSize={32} color="#00ACC1" fontWeight={700}>12</Typography>
+                <LinearProgress variant="determinate" value={70} sx={{ width: '80%', mt: 1, bgcolor: '#e0f7fa', height: 6, borderRadius: 3 }} />
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+        <Divider sx={{ my: 4 }} />
+        {/* Pie Chart: Hostel Occupancy */}
+        <Box display="flex" justifyContent="center" alignItems="center" my={2} gap={4}>
+          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minWidth: 260, background: 'linear-gradient(135deg, #e3f0ff 60%, #fafcff 100%)' }}>
+            <Typography fontWeight={600} color="#1976d2" mb={1} textAlign="center">
+              Hostel Occupancy
+            </Typography>
+            <PieChartWithCenterLabel />
+            <Typography fontSize={14} color="#1976d2" mt={1} textAlign="center">
+              80% occupied (160/200 beds)
+            </Typography>
+          </Paper>
+          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minWidth: 260, background: 'linear-gradient(135deg, #e3f0ff 60%, #fafcff 100%)' }}>
+            <Typography fontWeight={600} color="#1976d2" mb={1} textAlign="center">
+              Hostel Occupancy
+            </Typography>
+            <PieChartWithCenterLabel />
+            <Typography fontSize={14} color="#1976d2" mt={1} textAlign="center">
+              80% occupied (160/200 beds)
+            </Typography>
+          </Paper>
         </Box>
+        
+      </Box>
     </Box>
   )
 }
