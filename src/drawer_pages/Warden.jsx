@@ -6,29 +6,21 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 const headers = [
-  'regNo',
-  'f_Name',
-  'l_Name',
-  'email',
-  'contactNo',
-  'role',
-  'gender',
-  'state'
+  'warden_id',
+  'hostel_name',
+  'block',
+  'admin_id'
 ];
 
-const colWidths = ['12%', '14%', '14%', '18%', '14%', '8%', '8%', '12%'];
+const colWidths = ['20%', '30%', '20%', '30%'];
 
 export default function Warden() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    regNo: '',
-    f_Name: '',
-    l_Name: '',
-    email: '',
-    contactNo: '',
-    role: '',
-    gender: '',
-    state: ''
+    warden_id: '',
+    hostel_name: '',
+    block: '',
+    admin_id: ''
   });
 
   useEffect(() => {
@@ -37,7 +29,7 @@ export default function Warden() {
 
   const fetchWardens = () => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:8090/api/v1/user/getallwarden', {
+    axios.get('http://localhost:8090/api/v1/warden/getallwarden', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -45,14 +37,10 @@ export default function Warden() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(warden => ({
-          regNo: warden.regNo || '',
-          f_Name: warden.f_Name || '',
-          l_Name: warden.l_Name || '',
-          email: warden.email || '',
-          contactNo: warden.contactNo || '',
-          role: warden.role || '',
-          gender: warden.gender || '',
-          state: warden.state !== undefined ? String(warden.state) : '',
+          warden_id: warden.warden_id || '',
+          hostel_name: warden.hostel_name || '',
+          block: warden.block || '',
+          admin_id: warden.admin_id || ''
         }));
         setRows(tableRows);
       })
@@ -69,14 +57,10 @@ export default function Warden() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      regNo: '',
-      f_Name: '',
-      l_Name: '',
-      email: '',
-      contactNo: '',
-      role: '',
-      gender: '',
-      state: ''
+      warden_id: '',
+      hostel_name: '',
+      block: '',
+      admin_id: ''
     });
   };
 
@@ -89,27 +73,23 @@ export default function Warden() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      regNo: selectedRow.regNo,
-      f_Name: selectedRow.f_Name,
-      l_Name: selectedRow.l_Name,
-      email: selectedRow.email,
-      contactNo: selectedRow.contactNo,
-      role: selectedRow.role,
-      gender: selectedRow.gender,
-      state: selectedRow.state === 'true' || selectedRow.state === true,
-      password: '' // You may want to handle password update separately
+      warden_id: selectedRow.warden_id,
+      hostel_name: selectedRow.hostel_name,
+      block: selectedRow.block,
+      admin_id: selectedRow.admin_id
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/warden/updatewarden', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log(res.data); // Log the response
       fetchWardens();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      console.log(err?.response?.data || err);
     }
   };
 
@@ -132,6 +112,9 @@ export default function Warden() {
             onChange={handleFieldChange(header)}
             variant="outlined"
             size="small"
+            InputProps={{
+              readOnly: header === 'warden_id'
+            }}
           />
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
