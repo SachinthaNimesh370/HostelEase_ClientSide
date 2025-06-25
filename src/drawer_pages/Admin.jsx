@@ -6,14 +6,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 const headers = [
-  'regNo',
-  'f_Name',
-  'l_Name',
-  'email',
-  'contactNo',
-  'role',
-  'gender',
-  'state'
+  'Admin ID',
+  'First Name',
+  'Last Name',
+  'Email',
+  'Mobile No',
+  'Role',
+  'Gender',
+  'Status'
 ];
 
 const colWidths = ['12%', '14%', '14%', '18%', '14%', '8%', '8%', '12%'];
@@ -21,14 +21,14 @@ const colWidths = ['12%', '14%', '14%', '18%', '14%', '8%', '8%', '12%'];
 export default function Admin() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    regNo: '',
-    f_Name: '',
-    l_Name: '',
-    email: '',
-    contactNo: '',
-    role: '',
-    gender: '',
-    state: ''
+    'Admin ID': '',
+    'First Name': '',
+    'Last Name': '',
+    'Email': '',
+    'Mobile No': '',
+    'Role': '',
+    'Gender': '',
+    'Status': ''
   });
 
   useEffect(() => {
@@ -45,14 +45,14 @@ export default function Admin() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(admin => ({
-          regNo: admin.regNo || '',
-          f_Name: admin.f_Name || '',
-          l_Name: admin.l_Name || '',
-          email: admin.email || '',
-          contactNo: admin.contactNo || '',
-          role: admin.role || '',
-          gender: admin.gender || '',
-          state: admin.state !== undefined ? String(admin.state) : '',
+          'Admin ID': admin.regNo || '',
+          'First Name': admin.f_Name || '',
+          'Last Name': admin.l_Name || '',
+          'Email': admin.email || '',
+          'Mobile No': admin.contactNo || '',
+          'Role': admin.role || '',
+          'Gender': admin.gender || '',
+          'Status': admin.state !== undefined ? String(admin.state) : '',
         }));
         setRows(tableRows);
       })
@@ -69,14 +69,14 @@ export default function Admin() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      regNo: '',
-      f_Name: '',
-      l_Name: '',
-      email: '',
-      contactNo: '',
-      role: '',
-      gender: '',
-      state: ''
+      'Admin ID': '',
+      'First Name': '',
+      'Last Name': '',
+      'Email': '',
+      'Mobile No': '',
+      'Role': '',
+      'Gender': '',
+      'Status': ''
     });
   };
 
@@ -89,14 +89,14 @@ export default function Admin() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      regNo: selectedRow.regNo,
-      f_Name: selectedRow.f_Name,
-      l_Name: selectedRow.l_Name,
-      email: selectedRow.email,
-      contactNo: selectedRow.contactNo,
-      role: selectedRow.role,
-      gender: selectedRow.gender,
-      state: selectedRow.state === 'true' || selectedRow.state === true,
+      regNo: selectedRow['Admin ID'],
+      f_Name: selectedRow['First Name'],
+      l_Name: selectedRow['Last Name'],
+      email: selectedRow['Email'],
+      contactNo: selectedRow['Mobile No'],
+      role: selectedRow['Role'],
+      gender: selectedRow['Gender'],
+      state: selectedRow['Status'] === 'true' || selectedRow['Status'] === true,
       password: '' // You may want to handle password update separately
     };
     try {

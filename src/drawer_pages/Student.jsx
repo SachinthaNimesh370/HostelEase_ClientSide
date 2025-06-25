@@ -7,11 +7,11 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
-  'student_id',
-  'duration',
-  'admin_id',
-  'warden_id',
-  'room_id'
+  'Student ID',
+  'Duration',
+  'Admin ID',
+  'Warden ID',
+  'Room ID'
 ];
 
 const colWidths = ['18%', '18%', '18%', '18%', '18%'];
@@ -19,11 +19,11 @@ const colWidths = ['18%', '18%', '18%', '18%', '18%'];
 export default function Student() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    student_id: '',
-    duration: '',
-    admin_id: '',
-    warden_id: '',
-    room_id: ''
+    'Student ID': '',
+    'Duration': '',
+    'Admin ID': '',
+    'Warden ID': '',
+    'Room ID': ''
   });
 
   useEffect(() => {
@@ -40,11 +40,11 @@ export default function Student() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(student => ({
-          student_id: student.student_id || '',
-          duration: student.duration || '',
-          admin_id: student.admin_id || '',
-          warden_id: student.warden_id || '',
-          room_id: student.room_id || ''
+          'Student ID': student.student_id || '',
+          'Duration': student.duration || '',
+          'Admin ID': student.admin_id || '',
+          'Warden ID': student.warden_id || '',
+          'Room ID': student.room_id || ''
         }));
         setRows(tableRows);
       })
@@ -61,11 +61,11 @@ export default function Student() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      student_id: '',
-      duration: '',
-      admin_id: '',
-      warden_id: '',
-      room_id: ''
+      'Student ID': '',
+      'Duration': '',
+      'Admin ID': '',
+      'Warden ID': '',
+      'Room ID': ''
     });
   };
 
@@ -78,11 +78,11 @@ export default function Student() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      student_id: selectedRow.student_id,
-      duration: selectedRow.duration,
-      admin_id: selectedRow.admin_id,
-      warden_id: selectedRow.warden_id,
-      room_id: selectedRow.room_id
+      student_id: selectedRow['Student ID'],
+      duration: selectedRow['Duration'],
+      admin_id: selectedRow['Admin ID'],
+      warden_id: selectedRow['Warden ID'],
+      room_id: selectedRow['Room ID']
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/student/updatestudent', payload, {
@@ -111,7 +111,7 @@ export default function Student() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          header === 'duration' ? (
+          header === 'Duration' ? (
             <TextField
               key={header}
               label={header}
@@ -135,7 +135,7 @@ export default function Student() {
               variant="outlined"
               size="small"
               InputProps={{
-                readOnly: header === 'student_id'
+                readOnly: header === 'Student ID'
               }}
             />
           )

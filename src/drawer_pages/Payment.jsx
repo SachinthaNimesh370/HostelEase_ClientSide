@@ -7,27 +7,27 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
-  'payment_id',
-  'student_id',
-  'amount',
-  'description',
-  'date',
-  'status',
-  'warden_id'
+  'Payment ID',
+  'Student ID',
+  'Amount',
+  'Description',
+  'Date',
+  'Status',
+  'Warden ID'
 ];
 
-const colWidths = ['12%', '16%', '14%', '18%', '14%', '14%', '12%'];
+const colWidths = ['12%', '14%', '14%', '18%', '15%', '15%', '12%'];
 
 export default function Payment() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    payment_id: '',
-    student_id: '',
-    amount: '',
-    description: '',
-    date: '',
-    status: '',
-    warden_id: ''
+    'Payment ID': '',
+    'Student ID': '',
+    'Amount': '',
+    'Description': '',
+    'Date': '',
+    'Status': '',
+    'Warden ID': ''
   });
 
   useEffect(() => {
@@ -44,13 +44,13 @@ export default function Payment() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(payment => ({
-          payment_id: payment.payment_id || '',
-          student_id: payment.student?.student_id || '',
-          amount: payment.amount || '',
-          description: payment.description || '',
-          date: payment.date || '',
-          status: payment.status || '',
-          warden_id: payment.warden?.warden_id || '',
+          'Payment ID': payment.payment_id || '',
+          'Student ID': payment.student?.student_id || '',
+          'Amount': payment.amount || '',
+          'Description': payment.description || '',
+          'Date': payment.date || '',
+          'Status': payment.status || '',
+          'Warden ID': payment.warden?.warden_id || '',
         }));
         setRows(tableRows);
       })
@@ -67,13 +67,13 @@ export default function Payment() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      payment_id: '',
-      student_id: '',
-      amount: '',
-      description: '',
-      date: '',
-      status: '',
-      warden_id: ''
+      'Payment ID': '',
+      'Student ID': '',
+      'Amount': '',
+      'Description': '',
+      'Date': '',
+      'Status': '',
+      'Warden ID': ''
     });
   };
 
@@ -86,13 +86,13 @@ export default function Payment() {
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      PaymentId: selectedRow.payment_id ? Number(selectedRow.payment_id) : undefined,
-      amount: parseFloat(selectedRow.amount),
-      description: selectedRow.description,
-      date: selectedRow.date,
-      status: selectedRow.status,
-      student_id: selectedRow.student_id,
-      wardenId: selectedRow.warden_id || ""
+      PaymentId: selectedRow['Payment ID'] ? Number(selectedRow['Payment ID']) : undefined,
+      amount: parseFloat(selectedRow['Amount']),
+      description: selectedRow['Description'],
+      date: selectedRow['Date'],
+      status: selectedRow['Status'],
+      student_id: selectedRow['Student ID'],
+      wardenId: selectedRow['Warden ID'] || ""
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/payment/newpayment', payload, {
@@ -113,13 +113,13 @@ export default function Payment() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      payment_id: selectedRow.payment_id,
-      amount: parseFloat(selectedRow.amount),
-      description: selectedRow.description,
-      date: selectedRow.date,
-      status: selectedRow.status,
-      student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      payment_id: selectedRow['Payment ID'],
+      amount: parseFloat(selectedRow['Amount']),
+      description: selectedRow['Description'],
+      date: selectedRow['Date'],
+      status: selectedRow['Status'],
+      student_id: selectedRow['Student ID'],
+      warden_id: selectedRow['Warden ID']
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/payment/updatepayment', payload, {
@@ -140,7 +140,7 @@ export default function Payment() {
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      payment_id: selectedRow.payment_id,
+      payment_id: selectedRow['Payment ID'],
       amount: '',
       description: '',
       date: '',
@@ -175,7 +175,7 @@ export default function Payment() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          header === 'status' ? (
+          header === 'Status' ? (
             <TextField
               key={header}
               label={header}
@@ -185,7 +185,7 @@ export default function Payment() {
               size="small"
               select
               InputProps={{
-                readOnly: header === 'payment_id'
+                readOnly: header === 'Payment ID'
               }}
             >
               <MenuItem value="Pending">Pending</MenuItem>
@@ -200,7 +200,7 @@ export default function Payment() {
               variant="outlined"
               size="small"
               InputProps={{
-                readOnly: header === 'payment_id'
+                readOnly: header === 'Payment ID'
               }}
             />
           )

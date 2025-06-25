@@ -6,27 +6,27 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
-  'complain_id',
-  'student_id',
-  'catagory',
-  'content',
-  'date',
-  'time',
-  'status',
-  'warden_id'
+  'Complain ID',
+  'Student Reg No',
+  'Category',
+  'Content',
+  'Date',
+  'Time',
+  'Status',
+  'Warden ID'
 ];
 
 export default function Complain() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    complain_id: '',
-    student_id: '',
-    catagory: '',
-    content: '',
-    date: '',
-    time: '',
-    status: '',
-    warden_id: ''
+    'Complain ID': '',
+    'Student Reg No': '',
+    'Category': '',
+    'Content': '',
+    'Date': '',
+    'Time': '',
+    'Status': '',
+    'Warden ID': ''
   });
 
   // Move fetchComplains outside useEffect so it can be called after update
@@ -42,14 +42,14 @@ export default function Complain() {
       const data = await response.json();
       if (data.code === 200 && data.data && data.data.massage) {
         const mappedRows = data.data.massage.map(item => ({
-          'complain_id': item.complain_id || '',
-          'student_id': item.student?.student_id || '',
-          'catagory': item.catagory || '',
-          'content': item.content || '',
-          'date': item.date || '',
-          'time': item.time || '',
-          'status': item.status || '',
-          'warden_id': item.warden?.warden_id || '',
+          'Complain ID': item.complain_id || '',
+          'Student Reg No': item.student?.student_id || '',
+          'Category': item.catagory || '',
+          'Content': item.content || '',
+          'Date': item.date || '',
+          'Time': item.time || '',
+          'Status': item.status || '',
+          'Warden ID': item.warden?.warden_id || '',
         }));
         setRows(mappedRows);
       }
@@ -70,14 +70,14 @@ export default function Complain() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      complain_id: '',
-      student_id: '',
-      catagory: '',
-      content: '',
-      date: '',
-      time: '',
-      status: '',
-      warden_id: ''
+      'Complain ID': '',
+      'Student Reg No': '',
+      'Category': '',
+      'Content': '',
+      'Date': '',
+      'Time': '',
+      'Status': '',
+      'Warden ID': ''
     });
   };
 
@@ -90,14 +90,14 @@ export default function Complain() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      complain_id: selectedRow.complain_id,
-      catagory: selectedRow.catagory,
-      content: selectedRow.content,
-      date: selectedRow.date,
-      time: selectedRow.time,
-      status: selectedRow.status,
-      student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      complain_id: selectedRow['Complain ID'],
+      catagory: selectedRow['Category'],
+      content: selectedRow['Content'],
+      date: selectedRow['Date'],
+      time: selectedRow['Time'],
+      status: selectedRow['Status'],
+      student_id: selectedRow['Student Reg No'],
+      warden_id: selectedRow['Warden ID']
     };
     try {
       await fetch('http://localhost:8090/api/v1/complain/updatecomplain', {
@@ -120,14 +120,14 @@ export default function Complain() {
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      complain_id: selectedRow.complain_id,
-      catagory: selectedRow.catagory,
-      content: selectedRow.content,
-      date: selectedRow.date,
-      time: selectedRow.time,
-      status: selectedRow.status,
-      student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      complain_id: selectedRow['Complain ID'],
+      catagory: selectedRow['Category'],
+      content: selectedRow['Content'],
+      date: selectedRow['Date'],
+      time: selectedRow['Time'],
+      status: selectedRow['Status'],
+      student_id: selectedRow['Student Reg No'],
+      warden_id: selectedRow['Warden ID']
     };
     try {
       await fetch('http://localhost:8090/api/v1/complain/deletecomplain', {
@@ -153,12 +153,12 @@ export default function Complain() {
         rows={rows}
         tableWidth={1080}
         tableHeight={700}
-        colWidths={["10%", "10%", "15%", "24%", "12%", "9%", "10%", "10%"]}
+        colWidths={["12%", "14%", "15%", "22%", "10%", "9%", "8%", "10%"]}
         onRowClick={handleRowClick}
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header) => (
-          header === 'status' ? (
+          header === 'Status' ? (
             <TextField
               key={header}
               label={header}
@@ -181,12 +181,12 @@ export default function Complain() {
               size="small"
               InputProps={{
                 readOnly: [
-                  'complain_id',
-                  'student_id',
-                  'catagory',
-                  'content',
-                  'date',
-                  'time'
+                  'Complain ID',
+                  'Student Reg No',
+                  'Category',
+                  'Content',
+                  'Date',
+                  'Time'
                 ].includes(header)
               }}
             />

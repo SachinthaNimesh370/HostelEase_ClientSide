@@ -6,14 +6,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 const headers = [
-  'regNo',
-  'f_Name',
-  'l_Name',
-  'email',
-  'contactNo',
-  'role',
-  'gender',
-  'state'
+  'User ID',
+  'First Name',
+  'Last Name',
+  'Email',
+  'Mobile No',
+  'Role',
+  'Gender',
+  'Status'
 ];
 
 const colWidths = ['12%', '14%', '14%', '18%', '14%', '8%', '8%', '12%'];
@@ -21,14 +21,14 @@ const colWidths = ['12%', '14%', '14%', '18%', '14%', '8%', '8%', '12%'];
 export default function Users() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    regNo: '',
-    f_Name: '',
-    l_Name: '',
-    email: '',
-    contactNo: '',
-    role: '',
-    gender: '',
-    state: '',
+    'User ID': '',
+    'First Name': '',
+    'Last Name': '',
+    'Email': '',
+    'Mobile No': '',
+    'Role': '',
+    'Gender': '',
+    'Status': '',
     password: '' // hidden, not shown in UI
   });
 
@@ -45,8 +45,14 @@ export default function Users() {
         const mappedUsers = users.map(u => {
           const { password, ...rest } = u;
           return {
-            ...rest,
-            state: u.state === true ? 'Active' : 'Inactive',
+            'User ID': u.regNo || '',
+            'First Name': u.f_Name || '',
+            'Last Name': u.l_Name || '',
+            'Email': u.email || '',
+            'Mobile No': u.contactNo || '',
+            'Role': u.role || '',
+            'Gender': u.gender || '',
+            'Status': u.state === true ? 'Active' : 'Inactive',
             password: u.password // keep password for update
           };
         });
@@ -66,14 +72,14 @@ export default function Users() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      regNo: '',
-      f_Name: '',
-      l_Name: '',
-      email: '',
-      contactNo: '',
-      role: '',
-      gender: '',
-      state: ''
+      'User ID': '',
+      'First Name': '',
+      'Last Name': '',
+      'Email': '',
+      'Mobile No': '',
+      'Role': '',
+      'Gender': '',
+      'Status': ''
     });
   };
 
@@ -86,15 +92,15 @@ export default function Users() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     // Convert state back to boolean
-    const stateBool = selectedRow.state === 'Active';
+    const stateBool = selectedRow['Status'] === 'Active';
     const payload = {
-      regNo: selectedRow.regNo,
-      f_Name: selectedRow.f_Name,
-      l_Name: selectedRow.l_Name,
-      email: selectedRow.email,
-      contactNo: selectedRow.contactNo,
-      role: selectedRow.role,
-      gender: selectedRow.gender,
+      regNo: selectedRow['User ID'],
+      f_Name: selectedRow['First Name'],
+      l_Name: selectedRow['Last Name'],
+      email: selectedRow['Email'],
+      contactNo: selectedRow['Mobile No'],
+      role: selectedRow['Role'],
+      gender: selectedRow['Gender'],
       state: stateBool,
       password: selectedRow.password || ''
     };
@@ -115,8 +121,14 @@ export default function Users() {
       const mappedUsers = users.map(u => {
         const { password, ...rest } = u;
         return {
-          ...rest,
-          state: u.state === true ? 'Active' : 'Inactive',
+          'User ID': u.regNo || '',
+          'First Name': u.f_Name || '',
+          'Last Name': u.l_Name || '',
+          'Email': u.email || '',
+          'Mobile No': u.contactNo || '',
+          'Role': u.role || '',
+          'Gender': u.gender || '',
+          'Status': u.state === true ? 'Active' : 'Inactive',
           password: u.password
         };
       });

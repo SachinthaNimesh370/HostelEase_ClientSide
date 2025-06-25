@@ -7,31 +7,31 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
-  'visitor_id',
-  'nic',
-  'name',
-  'student_id',
-  'date',
-  'entryTime',
-  'exitTime',
-  'state',
-  'warden_id'
+  'Visitor ID',
+  'NIC',
+  'Name',
+  'Student ID',
+  'Date',
+  'Entry Time',
+  'Exit Time',
+  'Status',
+  'Warden ID'
 ];
 
-const colWidths = ['8%', '12%', '17%', '11%', '12%', '10%', '10%', '8%', '12%'];
+const colWidths = ['10%', '12%', '15%', '11%', '12%', '10%', '10%', '8%', '12%'];
 
 export default function Visitors() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    visitor_id: '',
-    nic: '',
-    name: '',
-    student_id: '',
-    date: '',
-    entryTime: '',
-    exitTime: '',
-    state: '',
-    warden_id: ''
+    'Visitor ID': '',
+    'NIC': '',
+    'Name': '',
+    'Student ID': '',
+    'Date': '',
+    'Entry Time': '',
+    'Exit Time': '',
+    'Status': '',
+    'Warden ID': ''
   });
 
   useEffect(() => {
@@ -48,15 +48,15 @@ export default function Visitors() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(visitor => ({
-          visitor_id: visitor.visitor_id || '',
-          nic: visitor.nic || '',
-          name: visitor.name || '',
-          student_id: visitor.student?.student_id || '',
-          date: visitor.date || '',
-          entryTime: visitor.entryTime || '',
-          exitTime: visitor.exitTime || '',
-          state: visitor.state || '',
-          warden_id: visitor.warden?.warden_id || '',
+          'Visitor ID': visitor.visitor_id || '',
+          'NIC': visitor.nic || '',
+          'Name': visitor.name || '',
+          'Student ID': visitor.student?.student_id || '',
+          'Date': visitor.date || '',
+          'Entry Time': visitor.entryTime || '',
+          'Exit Time': visitor.exitTime || '',
+          'Status': visitor.state || '',
+          'Warden ID': visitor.warden?.warden_id || '',
         }));
         setRows(tableRows);
       })
@@ -73,15 +73,15 @@ export default function Visitors() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      visitor_id: '',
-      nic: '',
-      name: '',
-      student_id: '',
-      date: '',
-      entryTime: '',
-      exitTime: '',
-      state: '',
-      warden_id: ''
+      'Visitor ID': '',
+      'NIC': '',
+      'Name': '',
+      'Student ID': '',
+      'Date': '',
+      'Entry Time': '',
+      'Exit Time': '',
+      'Status': '',
+      'Warden ID': ''
     });
   };
 
@@ -94,15 +94,15 @@ export default function Visitors() {
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      visitor_id: selectedRow.visitor_id,
-      nic: selectedRow.nic,
-      name: selectedRow.name,
-      date: selectedRow.date,
-      entryTime: selectedRow.entryTime,
-      exitTime: selectedRow.exitTime,
-      state: selectedRow.state,
-      student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      visitor_id: selectedRow['Visitor ID'],
+      nic: selectedRow['NIC'],
+      name: selectedRow['Name'],
+      date: selectedRow['Date'],
+      entryTime: selectedRow['Entry Time'],
+      exitTime: selectedRow['Exit Time'],
+      state: selectedRow['Status'],
+      student_id: selectedRow['Student ID'],
+      warden_id: selectedRow['Warden ID']
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/visitor/newvisitor', payload, {
@@ -123,15 +123,15 @@ export default function Visitors() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      visitor_id: selectedRow.visitor_id,
-      nic: selectedRow.nic,
-      name: selectedRow.name,
-      date: selectedRow.date,
-      entryTime: selectedRow.entryTime,
-      exitTime: selectedRow.exitTime,
-      state: selectedRow.state,
-      student_id: selectedRow.student_id,
-      warden_id: selectedRow.warden_id
+      visitor_id: selectedRow['Visitor ID'],
+      nic: selectedRow['NIC'],
+      name: selectedRow['Name'],
+      date: selectedRow['Date'],
+      entryTime: selectedRow['Entry Time'],
+      exitTime: selectedRow['Exit Time'],
+      state: selectedRow['Status'],
+      student_id: selectedRow['Student ID'],
+      warden_id: selectedRow['Warden ID']
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/visitor/updatevisitor', payload, {
@@ -152,7 +152,7 @@ export default function Visitors() {
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      visitor_id: selectedRow.visitor_id,
+      visitor_id: selectedRow['Visitor ID'],
       nic: '',
       name: '',
       date: '',
@@ -189,7 +189,7 @@ export default function Visitors() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          header === 'state' ? (
+          header === 'Status' ? (
             <TextField
               key={header}
               label={header}
@@ -211,7 +211,7 @@ export default function Visitors() {
               variant="outlined"
               size="small"
               InputProps={{
-                readOnly: header === 'visitor_id'
+                readOnly: header === 'Visitor ID'
               }}
             />
           )
