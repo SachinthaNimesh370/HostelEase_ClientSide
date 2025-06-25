@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
   'User ID',
@@ -151,14 +152,32 @@ export default function Users() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          <TextField
-            key={header}
-            label={header}
-            value={selectedRow[header]}
-            onChange={handleFieldChange(header)}
-            variant="outlined"
-            size="small"
-          />
+          header === 'Status' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Inactive">Inactive</MenuItem>
+            </TextField>
+          ) : (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              InputProps={{
+                readOnly: header === 'User ID'
+              }}
+            />
+          )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
