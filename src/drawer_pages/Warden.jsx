@@ -6,10 +6,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 const headers = [
-  'warden_id',
-  'hostel_name',
-  'block',
-  'admin_id'
+  'Warden ID',
+  'Hostel Name',
+  'Block',
+  'Admin ID'
 ];
 
 const colWidths = ['20%', '30%', '20%', '30%'];
@@ -17,10 +17,10 @@ const colWidths = ['20%', '30%', '20%', '30%'];
 export default function Warden() {
   const [rows, setRows] = useState([]);
   const [selectedRow, setSelectedRow] = useState({
-    warden_id: '',
-    hostel_name: '',
-    block: '',
-    admin_id: ''
+    'Warden ID': '',
+    'Hostel Name': '',
+    'Block': '',
+    'Admin ID': ''
   });
 
   useEffect(() => {
@@ -37,10 +37,10 @@ export default function Warden() {
       .then(res => {
         const massage = res.data?.data?.massage || [];
         const tableRows = massage.map(warden => ({
-          warden_id: warden.warden_id || '',
-          hostel_name: warden.hostel_name || '',
-          block: warden.block || '',
-          admin_id: warden.admin_id || ''
+          'Warden ID': warden.warden_id || '',
+          'Hostel Name': warden.hostel_name || '',
+          'Block': warden.block || '',
+          'Admin ID': warden.admin_id || ''
         }));
         setRows(tableRows);
       })
@@ -57,10 +57,10 @@ export default function Warden() {
   // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
-      warden_id: '',
-      hostel_name: '',
-      block: '',
-      admin_id: ''
+      'Warden ID': '',
+      'Hostel Name': '',
+      'Block': '',
+      'Admin ID': ''
     });
   };
 
@@ -73,10 +73,10 @@ export default function Warden() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      warden_id: selectedRow.warden_id,
-      hostel_name: selectedRow.hostel_name,
-      block: selectedRow.block,
-      admin_id: selectedRow.admin_id
+      warden_id: selectedRow['Warden ID'],
+      hostel_name: selectedRow['Hostel Name'],
+      block: selectedRow['Block'],
+      admin_id: selectedRow['Admin ID']
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/warden/updatewarden', payload, {
@@ -113,7 +113,7 @@ export default function Warden() {
             variant="outlined"
             size="small"
             InputProps={{
-              readOnly: header === 'warden_id'
+              readOnly: header === 'Warden ID'
             }}
           />
         ))}
