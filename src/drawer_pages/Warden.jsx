@@ -85,7 +85,7 @@ export default function Warden() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); // Log the response
+      console.log(res.data); 
       fetchWardens();
       handleClear();
     } catch (err) {
