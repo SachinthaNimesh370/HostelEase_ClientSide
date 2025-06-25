@@ -77,6 +77,7 @@ export default function Student() {
   // Handler for Update button
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
+    // Ensure payload keys and values match backend requirements
     const payload = {
       student_id: selectedRow['Student ID'],
       duration: selectedRow['Duration'],
