@@ -49,12 +49,10 @@ export default function Warden() {
       });
   };
 
-  // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
       'Warden ID': '',
@@ -64,12 +62,10 @@ export default function Warden() {
     });
   };
 
-  // Handler for text field change
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {

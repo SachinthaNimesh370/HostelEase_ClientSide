@@ -18,21 +18,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import PaymentIcon from '@mui/icons-material/Payment';
 import SchoolIcon from '@mui/icons-material/School';
-
 import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
-
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
-import Admin from '../drawer_pages/Admin';
-import Warden from '../drawer_pages/Warden';
+
 
 const drawerWidth = 240;
 
