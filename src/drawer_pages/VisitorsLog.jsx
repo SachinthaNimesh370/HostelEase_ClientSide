@@ -65,12 +65,10 @@ export default function Visitors() {
       });
   };
 
-  // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
       'Visitor ID': '',
@@ -85,12 +83,11 @@ export default function Visitors() {
     });
   };
 
-  // Handler for text field change
+
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Add button
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -111,7 +108,7 @@ export default function Visitors() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); // Log the response
+      console.log(res.data); 
       fetchVisitors();
       handleClear();
     } catch (err) {
@@ -119,7 +116,6 @@ export default function Visitors() {
     }
   };
 
-  // Handler for Update button
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -140,7 +136,7 @@ export default function Visitors() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); // Log the response
+      console.log(res.data); 
       fetchVisitors();
       handleClear();
     } catch (err) {
@@ -148,7 +144,6 @@ export default function Visitors() {
     }
   };
 
-  // Handler for Delete button
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -169,7 +164,7 @@ export default function Visitors() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); // Log the response
+      console.log(res.data); 
       fetchVisitors();
       handleClear();
     } catch (err) {

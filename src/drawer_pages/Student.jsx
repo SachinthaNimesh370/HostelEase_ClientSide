@@ -53,12 +53,10 @@ export default function Student() {
       });
   };
 
-  // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
       'Student ID': '',
@@ -69,15 +67,13 @@ export default function Student() {
     });
   };
 
-  // Handler for text field change
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
-    // Ensure payload keys and values match backend requirements
+ 
     const payload = {
       student_id: selectedRow['Student ID'],
       duration: selectedRow['Duration'],
@@ -92,7 +88,7 @@ export default function Student() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); // Log the response
+      console.log(res.data); 
       fetchStudents();
       handleClear();
     } catch (err) {

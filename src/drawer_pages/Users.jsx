@@ -30,7 +30,7 @@ export default function Users() {
     'Role': '',
     'Gender': '',
     'Status': '',
-    password: '' // hidden, not shown in UI
+    password: '' 
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Users() {
             'Role': u.role || '',
             'Gender': u.gender || '',
             'Status': u.state === true ? 'Active' : 'Inactive',
-            password: u.password // keep password for update
+            password: u.password 
           };
         });
         setRows(mappedUsers);
@@ -65,12 +65,12 @@ export default function Users() {
     fetchUsers();
   }, []);
 
-  // Handler for row click
+
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
+ 
   const handleClear = () => {
     setSelectedRow({
       'User ID': '',
@@ -84,15 +84,15 @@ export default function Users() {
     });
   };
 
-  // Handler for text field change
+
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button
+  
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
-    // Convert state back to boolean
+
     const stateBool = selectedRow['Status'] === 'Active';
     const payload = {
       regNo: selectedRow['User ID'],
@@ -112,7 +112,6 @@ export default function Users() {
           'Content-Type': 'application/json'
         }
       });
-      // Refresh table
       const res = await axios.get('http://localhost:8090/api/v1/user/getalluser', {
         headers: {
           Authorization: `Bearer ${token}`
@@ -136,7 +135,7 @@ export default function Users() {
       setRows(mappedUsers);
       handleClear();
     } catch (err) {
-      // Optionally handle error
+      
     }
   };
 
@@ -146,7 +145,7 @@ export default function Users() {
         headers={headers}
         rows={rows}
         tableWidth={1080}
-        tableHeight={650}
+        tableHeight={700}
         colWidths={colWidths}
         onRowClick={handleRowClick}
       />

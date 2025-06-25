@@ -138,11 +138,11 @@ export default function Complain() {
         },
         body: JSON.stringify(payload)
       });
-      // Refresh table and clear fields
+      
       await fetchComplains();
       handleClear();
     } catch (error) {
-      // Handle error as needed
+      
     }
   };
 

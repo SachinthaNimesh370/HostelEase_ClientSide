@@ -52,7 +52,7 @@ export default function Admin() {
           'Mobile No': admin.contactNo || '',
           'Role': admin.role || '',
           'Gender': admin.gender || '',
-          'Status': admin.state !== undefined ? String(admin.state) : '',
+          'Status': admin.state === true ? 'Active' : 'Inactive',
         }));
         setRows(tableRows);
       })
@@ -61,12 +61,10 @@ export default function Admin() {
       });
   };
 
-  // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
       'Admin ID': '',
@@ -80,12 +78,12 @@ export default function Admin() {
     });
   };
 
-  // Handler for text field change
+
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button
+
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -97,7 +95,7 @@ export default function Admin() {
       role: selectedRow['Role'],
       gender: selectedRow['Gender'],
       state: selectedRow['Status'] === 'true' || selectedRow['Status'] === true,
-      password: '' // You may want to handle password update separately
+      password: '' 
     };
     try {
       await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {
@@ -109,7 +107,7 @@ export default function Admin() {
       fetchAdmins();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+      
     }
   };
 

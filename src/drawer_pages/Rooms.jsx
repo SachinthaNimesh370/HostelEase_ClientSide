@@ -5,7 +5,6 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-// Use user-friendly headers for display
 const headers = [
   'Room ID',
   'Room No',
@@ -15,12 +14,10 @@ const headers = [
   'Warden ID'
 ];
 
-// Adjusted widths to total 100% and avoid horizontal scroll
 const colWidths = ['12%', '16%', '18%', '12%', '20%', '22%'];
 
 export default function Room() {
   const [rows, setRows] = useState([]);
-  // Map new header names to data keys
   const headerKeyMap = {
     'Room ID': 'Rid',
     'Room No': 'RoomNo',
@@ -66,12 +63,10 @@ export default function Room() {
       });
   };
 
-  // Handler for row click
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
   const handleClear = () => {
     setSelectedRow({
       'Room ID': '',
@@ -83,7 +78,6 @@ export default function Room() {
     });
   };
 
-  // Handler for Add button
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -104,11 +98,10 @@ export default function Room() {
       fetchRooms();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+ 
     }
   };
 
-  // Handler for Update button
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -129,11 +122,10 @@ export default function Room() {
       fetchRooms();
       handleClear();
     } catch (err) {
-      // Handle error as needed
     }
   };
 
-  // Handler for Delete button
+
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -154,11 +146,10 @@ export default function Room() {
       fetchRooms();
       handleClear();
     } catch (err) {
-      // Handle error as needed
+
     }
   };
 
-  // Handler for text field change
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };

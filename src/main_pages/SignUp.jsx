@@ -13,7 +13,6 @@ import { useState } from 'react';
 export default function SignUp() {
     const navigate = useNavigate();
 
-    // State for all input fields
     const [regNo, setRegNo] = useState('');
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
@@ -24,7 +23,6 @@ export default function SignUp() {
     const [role, setRole] = useState('');
     const [gender, setGender] = useState('');
 
-    // Dropdown handlers
     const handleChangeRole = (event) => {
         setRole(event.target.value);
     };
@@ -40,7 +38,6 @@ export default function SignUp() {
             return;
         }
         const userData = {
-            //id: 0, // let backend auto-generate if needed
             regNo: regNo,
             f_Name: fName,
             l_Name: lName,
