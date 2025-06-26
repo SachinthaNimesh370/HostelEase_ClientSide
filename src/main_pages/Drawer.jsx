@@ -26,38 +26,21 @@ import SchoolIcon from '@mui/icons-material/School';
 import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
 
 
 const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
+  justifyContent: 'center', // Center horizontally
+  flexDirection: 'column',  // Stack icon and regNo vertically
+  padding: theme.spacing(2, 2, 1, 2),
+  minHeight: 80,
+  background: 'transparent',
+  borderBottom: '1px solid #e3f0ff',
 }));
 
 const AppBar = styled(MuiAppBar, {
@@ -78,31 +61,30 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer)(({ theme }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  background: 'linear-gradient(135deg, #e3f0ff 0%, #fafcff 100%)',
+  borderRight: 'none',
+  boxShadow: '2px 0 16px 0 rgba(32,116,212,0.10)',
+  '& .MuiDrawer-paper': {
     width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  })
-);
+    background: 'linear-gradient(135deg, #e3f0ff 0%, #fafcff 100%)',
+    borderRight: 'none',
+    boxShadow: '2px 0 16px 0 rgba(32,116,212,0.10)',
+    color: '#1976d2',
+  },
+}));
 
 export default function DrawerLayout() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation(); 
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  // Provide open state to children via context
+  const DrawerContext = React.createContext({ open: true });
 
   const drawerItems1 = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: 'dashboard' },
@@ -133,17 +115,18 @@ export default function DrawerLayout() {
     navigate('/', { replace: true }); 
   };
 
+  const regNo = localStorage.getItem('regNo');
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex',background: '#FCFFFF',height: '100vh' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
             edge="start"
-            sx={{ marginRight: 5, ...(open && { display: 'none' }) }}
+            sx={{ marginRight: 5 }}
           >
             <MenuIcon />
           </IconButton>
@@ -154,14 +137,14 @@ export default function DrawerLayout() {
         </Toolbar>
       </AppBar>
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent">
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+          <AccountCircleRoundedIcon sx={{ fontSize: 40, color: '#1976d2', mb: 0.5 }} />
+          <Typography variant="subtitle1" sx={{ color: '#1976d2', fontWeight: 600, fontSize: 18, mt: 0.5 }}>
+            {regNo || 'Profile'}
+          </Typography>
         </DrawerHeader>
-
-        <Divider />
+        <Divider sx={{ background: '#e3f0ff' }} />
         <List>
           {drawerItems1.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -170,32 +153,49 @@ export default function DrawerLayout() {
                 selected={isActive(item.path)}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
+                  justifyContent: true ? 'initial' : 'center',
                   px: 2.5,
-                  backgroundColor: isActive(item.path) ? '#2074d4' : 'inherit',
-                  color: isActive(item.path) ? '#2074d4' : 'inherit',
+                  borderRadius: 2,
+                  margin: '6px 8px',
+                  background: isActive(item.path)
+                    ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
+                    : 'transparent',
+                  color: isActive(item.path) ? '#fff' : '#1976d2',
+                  boxShadow: isActive(item.path)
+                    ? '0 2px 8px 0 rgba(25,118,210,0.10)'
+                    : 'none',
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: isActive(item.path) ? 'primary.dark' : 'action.hover',
+                    background: isActive(item.path)
+                      ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
+                      : 'rgba(25,118,210,0.08)',
+                    color: '#509AE3',
                   },
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : 'auto',
+                    mr: true ? 3 : 'auto',
                     justifyContent: 'center',
-                    color: isActive(item.path) ? '#2074d4' : 'inherit',
+                    color: isActive(item.path) ? '#fff' : '#1976d2',
                   }}
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{
+                    opacity: true ? 1 : 0,
+                    fontWeight: 600,
+                    letterSpacing: 0.5,
+                  }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-
-        <Divider />
+        <Divider sx={{ background: '#e3f0ff' }} />
         <List sx={{ flexGrow: 1 }}>
           {drawerItems2.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
@@ -204,40 +204,58 @@ export default function DrawerLayout() {
                 selected={isActive(item.path)}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
+                  justifyContent: true ? 'initial' : 'center',
                   px: 2.5,
-                  backgroundColor: isActive(item.path) ? '#2074d4' : 'inherit',
-                  color: isActive(item.path) ? '#2074d4' : 'inherit',
+                  borderRadius: 2,
+                  margin: '6px 8px',
+                  background: isActive(item.path)
+                    ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
+                    : 'transparent',
+                  color: isActive(item.path) ? '#fff' : '#1976d2',
+                  boxShadow: isActive(item.path)
+                    ? '0 2px 8px 0 rgba(25,118,210,0.10)'
+                    : 'none',
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: isActive(item.path) ? '#2074d4' : 'action.hover',
+                    background: isActive(item.path)
+                      ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
+                      : 'rgba(25,118,210,0.08)',
+                    color: '#509AE3',
                   },
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : 'auto',
+                    mr: true ? 3 : 'auto',
                     justifyContent: 'center',
-                    color: isActive(item.path) ? '#2074d4' : 'inherit',
+                    color: isActive(item.path) ? '#fff' : '#1976d2',
                   }}
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{
+                    opacity: true ? 1 : 0,
+                    fontWeight: 600,
+                    letterSpacing: 0.5,
+                  }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         {/* Sign Out as a drawer item at the bottom */}
         <Box sx={{ flexGrow: 0, mt: 'auto', mb: 2 }}>
-          <Divider />
+          <Divider sx={{ background: '#e3f0ff' }} />
           <List>
             <ListItem disablePadding sx={{ display: 'block' }}>
-              <ListItemButton onClick={handleSignOut}>
-                <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+              <ListItemButton onClick={handleSignOut} sx={{ borderRadius: 2, margin: '6px 8px', color: '#d32f2f', '&:hover': { background: 'rgba(211,47,47,0.08)' } }}>
+                <ListItemIcon sx={{ minWidth: 0, mr: true ? 3 : 'auto', justifyContent: 'center', color: '#d32f2f' }}>
                   <LogoutIcon />
                 </ListItemIcon>
-                <ListItemText primary="Sign Out" sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary="Sign Out" sx={{ opacity: true ? 1 : 0, fontWeight: 600 }} />
               </ListItemButton>
             </ListItem>
           </List>
@@ -246,7 +264,9 @@ export default function DrawerLayout() {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Outlet />
+        <DrawerContext.Provider value={{ open: true }}>
+          <Outlet />
+        </DrawerContext.Provider>
       </Box>
     </Box>
   );
