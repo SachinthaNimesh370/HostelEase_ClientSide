@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -13,6 +13,55 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PieChartWithCenterLabel from './PieChatr';
 
 export default function DashbordPaper() {
+  const [studentCount, setStudentCount] = useState(null);
+  const [roomCount, setRoomCount] = useState(null);
+  const [availableRoomCount, setAvailableRoomCount] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    fetch('http://localhost:8090/api/v1/student/getnostudent', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.data && data.data.massage != null) {
+          setStudentCount(data.data.massage);
+        }
+      })
+      .catch(() => setStudentCount('N/A'));
+
+    fetch('http://localhost:8090/api/v1/room/getnoroom', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.data && data.data.massage != null) {
+          setRoomCount(data.data.massage);
+        }
+      })
+      .catch(() => setRoomCount('N/A'));
+
+    fetch('http://localhost:8090/api/v1/room/getnoroomavailable', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.data && data.data.massage != null) {
+          setAvailableRoomCount(data.data.massage);
+        }
+      })
+      .catch(() => setAvailableRoomCount('N/A'));
+  }, []);
+
   return (
     <Box>
       <Box
@@ -36,7 +85,9 @@ export default function DashbordPaper() {
                   <PeopleAltIcon fontSize="large" />
                 </Avatar>
                 <Typography fontSize={18} color="#FA5A7D" fontWeight={700}>Students</Typography>
-                <Typography fontSize={32} color="#FA5A7D" fontWeight={700}>20</Typography>
+                <Typography fontSize={32} color="#FA5A7D" fontWeight={700}>
+                  {studentCount !== null ? studentCount : '...'}
+                </Typography>
                 <LinearProgress variant="determinate" value={80} sx={{ width: '80%', mt: 1, bgcolor: '#ffe2e5', height: 6, borderRadius: 3 }} />
               </Box>
             </Paper>
@@ -49,7 +100,9 @@ export default function DashbordPaper() {
                   <MeetingRoomIcon fontSize="large" />
                 </Avatar>
                 <Typography fontSize={18} color="#FF947A" fontWeight={700}>Rooms</Typography>
-                <Typography fontSize={32} color="#FF947A" fontWeight={700}>20</Typography>
+                <Typography fontSize={32} color="#FF947A" fontWeight={700}>
+                  {roomCount !== null ? roomCount : '...'}
+                </Typography>
                 <LinearProgress variant="determinate" value={60} sx={{ width: '80%', mt: 1, bgcolor: '#fff4de', height: 6, borderRadius: 3 }} />
               </Box>
             </Paper>
@@ -63,7 +116,9 @@ export default function DashbordPaper() {
                   <TrendingUpIcon fontSize="large" />
                 </Avatar>
                 <Typography fontSize={18} color="#BF83FF" fontWeight={700}>Available Rooms</Typography>
-                <Typography fontSize={32} color="#BF83FF" fontWeight={700}>20</Typography>
+                <Typography fontSize={32} color="#BF83FF" fontWeight={700}>
+                  {availableRoomCount !== null ? availableRoomCount : '...'}
+                </Typography>
                 <LinearProgress variant="determinate" value={50} sx={{ width: '80%', mt: 1, bgcolor: '#f3e8ff', height: 6, borderRadius: 3 }} />
               </Box>
             </Paper>
