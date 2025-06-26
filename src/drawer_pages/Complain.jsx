@@ -29,7 +29,7 @@ export default function Complain() {
     'Warden ID': ''
   });
 
-  // Move fetchComplains outside useEffect so it can be called after update
+ 
   const fetchComplains = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -59,7 +59,7 @@ export default function Complain() {
   };
 
   useEffect(() => {
-    // On mount, set Warden ID if role is Warden
+   
     const role = localStorage.getItem('role');
     const regNo = localStorage.getItem('regNo');
     setSelectedRow(prev => ({
@@ -69,12 +69,12 @@ export default function Complain() {
     fetchComplains();
   }, []);
 
-  // Handler for row click
+  
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
 
-  // Handler for Clear button
+  
   const handleClear = () => {
     const role = localStorage.getItem('role');
     const regNo = localStorage.getItem('regNo');
@@ -90,12 +90,12 @@ export default function Complain() {
     });
   };
 
-  // Handler for text field change
+ 
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
-  // Handler for Update button
+ 
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -117,15 +117,15 @@ export default function Complain() {
         },
         body: JSON.stringify(payload)
       });
-      // Refresh table and clear fields
+      
       await fetchComplains();
       handleClear();
     } catch (error) {
-      // Handle error as needed
+      
     }
   };
 
-  // Handler for Delete button
+  
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
     const payload = {
@@ -155,7 +155,6 @@ export default function Complain() {
     }
   };
 
-  // Determine if buttons should be disabled based on role
   const role = localStorage.getItem('role');
   const isAdmin = role === 'Admin';
 
