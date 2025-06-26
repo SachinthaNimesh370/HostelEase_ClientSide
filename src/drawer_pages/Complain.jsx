@@ -59,6 +59,13 @@ export default function Complain() {
   };
 
   useEffect(() => {
+    // On mount, set Warden ID if role is Warden
+    const role = localStorage.getItem('role');
+    const regNo = localStorage.getItem('regNo');
+    setSelectedRow(prev => ({
+      ...prev,
+      'Warden ID': role === 'Warden' ? regNo : ''
+    }));
     fetchComplains();
   }, []);
 
@@ -69,6 +76,8 @@ export default function Complain() {
 
   // Handler for Clear button
   const handleClear = () => {
+    const role = localStorage.getItem('role');
+    const regNo = localStorage.getItem('regNo');
     setSelectedRow({
       'Complain ID': '',
       'Student Reg No': '',
@@ -77,7 +86,7 @@ export default function Complain() {
       'Date': '',
       'Time': '',
       'Status': '',
-      'Warden ID': ''
+      'Warden ID': role === 'Warden' ? regNo : ''
     });
   };
 
@@ -146,6 +155,10 @@ export default function Complain() {
     }
   };
 
+  // Determine if buttons should be disabled based on role
+  const role = localStorage.getItem('role');
+  const isAdmin = role === 'Admin';
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -171,6 +184,19 @@ export default function Complain() {
               <MenuItem value="Pending">Pending</MenuItem>
               <MenuItem value="Solved">Solved</MenuItem>
             </TextField>
+          ) : header === 'Warden ID' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="N/A">N/A</MenuItem>
+              <MenuItem value={localStorage.getItem('regNo') || ''}>{localStorage.getItem('regNo') || 'Warden RegNo'}</MenuItem>
+            </TextField>
           ) : (
             <TextField
               key={header}
@@ -193,9 +219,9 @@ export default function Complain() {
           )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate} disabled={isAdmin}>Update</Button>
+          <Button variant="contained" color="error" onClick={handleDelete} disabled={isAdmin}>Delete</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
     </Box>
