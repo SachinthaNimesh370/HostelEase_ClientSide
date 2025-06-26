@@ -31,7 +31,11 @@ export default function SignIn() {
                 console.log("role is : " + role)
                 console.log("regNo is : " + regNo)
                 console.log("SignIn successful:", message);
-                navigate('/drawer/dashboard');
+                if (role === 'student' || role === 'Student') {
+                    navigate('/drawerstu/dashboard');
+                } else {
+                    navigate('/drawer/dashboard');
+                }
         })
         .catch(error => {
             // Remove regNo from localStorage if request fails (not 200)

@@ -22,20 +22,16 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import PaymentIcon from '@mui/icons-material/Payment';
 import SchoolIcon from '@mui/icons-material/School';
 import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
-import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
-
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center', 
-  flexDirection: 'column',  
+  justifyContent: 'center',
+  flexDirection: 'column',
   padding: theme.spacing(2, 2, 1, 2),
   minHeight: 80,
   background: 'transparent',
@@ -77,48 +73,29 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
   },
 }));
 
-export default function DrawerLayout() {
+export default function DrawerStudent() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const location = useLocation(); 
 
-  // Provide open state to children via context
-  const DrawerContext = React.createContext({ open: true });
-
-  const drawerItems1 = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: 'dashboard' },
-    { text: 'Rooms', icon: <MeetingRoomIcon />, path: 'rooms' },
-    { text: 'Complain', icon: <ReportProblemIcon />, path: 'complain' },
-    { text: 'Payment', icon: <PaymentIcon />, path: 'payment' },
-    { text: 'Visitors Log', icon: <Diversity3RoundedIcon />, path: 'visitors' },
-  ];
-
-  const drawerItems2 = [
-
-    { text: 'Student', icon: <SchoolIcon />, path: 'students' },
-    { text: 'Warden', icon: <PersonRoundedIcon />, path: 'warden' },
-    { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
-    { text: 'Security', icon: <SecurityRoundedIcon />, path: 'security' },
-    { text: 'Users', icon: <SupervisorAccountIcon />, path: 'users' },
-    
+  const drawerItems = [
+    { text: 'New Complain', icon: <DashboardIcon />, path: 'complainStudent' },
   ];
 
   const handleNavigate = (path) => {
-    navigate(`/drawer/${path}`);
+    navigate(`/drawerstu/${path}`);
   };
 
-  const isActive = (path) => location.pathname === `/drawer/${path}`;
-
+  const isActive = (path) => location.pathname === `/drawerstu/${path}`;
 
   const handleSignOut = () => {
-    localStorage.clear(); 
-    navigate('/', { replace: true }); 
+    localStorage.clear();
+    navigate('/', { replace: true });
   };
 
   const regNo = localStorage.getItem('regNo');
 
   return (
-    <Box sx={{ display: 'flex',background: '#FCFFFF',height: '100vh' }}>
+    <Box sx={{ display: 'flex', background: '#FCFFFF', height: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open>
         <Toolbar>
@@ -146,14 +123,14 @@ export default function DrawerLayout() {
         </DrawerHeader>
         <Divider sx={{ background: '#e3f0ff' }} />
         <List>
-          {drawerItems1.map((item) => (
+          {drawerItems.map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 onClick={() => handleNavigate(item.path)}
                 selected={isActive(item.path)}
                 sx={{
                   minHeight: 48,
-                  justifyContent: true ? 'initial' : 'center',
+                  justifyContent: 'initial',
                   px: 2.5,
                   borderRadius: 2,
                   margin: '6px 8px',
@@ -176,7 +153,7 @@ export default function DrawerLayout() {
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: true ? 3 : 'auto',
+                    mr: 3,
                     justifyContent: 'center',
                     color: isActive(item.path) ? '#fff' : '#1976d2',
                   }}
@@ -186,58 +163,7 @@ export default function DrawerLayout() {
                 <ListItemText
                   primary={item.text}
                   sx={{
-                    opacity: true ? 1 : 0,
-                    fontWeight: 600,
-                    letterSpacing: 0.5,
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider sx={{ background: '#e3f0ff' }} />
-        <List sx={{ flexGrow: 1 }}>
-          {drawerItems2.map((item) => (
-            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                onClick={() => handleNavigate(item.path)}
-                selected={isActive(item.path)}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: true ? 'initial' : 'center',
-                  px: 2.5,
-                  borderRadius: 2,
-                  margin: '6px 8px',
-                  background: isActive(item.path)
-                    ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
-                    : 'transparent',
-                  color: isActive(item.path) ? '#fff' : '#1976d2',
-                  boxShadow: isActive(item.path)
-                    ? '0 2px 8px 0 rgba(25,118,210,0.10)'
-                    : 'none',
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    background: isActive(item.path)
-                      ? 'linear-gradient(90deg, #1976d2 60%, #509AE3 100%)'
-                      : 'rgba(25,118,210,0.08)',
-                    color: '#509AE3',
-                  },
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: true ? 3 : 'auto',
-                    justifyContent: 'center',
-                    color: isActive(item.path) ? '#fff' : '#1976d2',
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{
-                    opacity: true ? 1 : 0,
+                    opacity: 1,
                     fontWeight: 600,
                     letterSpacing: 0.5,
                   }}
@@ -252,10 +178,10 @@ export default function DrawerLayout() {
           <List>
             <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton onClick={handleSignOut} sx={{ borderRadius: 2, margin: '6px 8px', color: '#d32f2f', '&:hover': { background: 'rgba(211,47,47,0.08)' } }}>
-                <ListItemIcon sx={{ minWidth: 0, mr: true ? 3 : 'auto', justifyContent: 'center', color: '#d32f2f' }}>
+                <ListItemIcon sx={{ minWidth: 0, mr: 3, justifyContent: 'center', color: '#d32f2f' }}>
                   <LogoutIcon />
                 </ListItemIcon>
-                <ListItemText primary="Sign Out" sx={{ opacity: true ? 1 : 0, fontWeight: 600 }} />
+                <ListItemText primary="Sign Out" sx={{ opacity: 1, fontWeight: 600 }} />
               </ListItemButton>
             </ListItem>
           </List>
@@ -264,9 +190,7 @@ export default function DrawerLayout() {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <DrawerContext.Provider value={{ open: true }}>
-          <Outlet />
-        </DrawerContext.Provider>
+        <Outlet />
       </Box>
     </Box>
   );

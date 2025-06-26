@@ -13,6 +13,8 @@ import Admin from './drawer_pages/Admin';
 import Warden from './drawer_pages/Warden';
 import Users from './drawer_pages/Users';
 import Security from './drawer_pages/Security';
+import DrawerStudent from "./main_pages/DrawerStudent";
+import ComplainStudent from './drawer_pages/ComplainStudent'; // Assuming this is a student-specific complain page
 
 function App() {
   return (
@@ -33,6 +35,13 @@ function App() {
           <Route path="warden" element={<Warden />} />
           <Route path="users" element={<Users />} />
           <Route path="security" element={<Security />} />
+        </Route>
+        {/* Student Drawer Layout */}
+        <Route path="/drawerstu/*" element={<DrawerStudent />}>
+          <Route path="complainStudent" element={<ComplainStudent />} />
+
+          
+          {/* Add more student-specific routes here if needed */}
         </Route>
       </Routes>
     </BrowserRouter>
