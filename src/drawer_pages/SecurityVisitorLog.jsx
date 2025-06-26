@@ -16,7 +16,7 @@ const headers = [
   'Exit Time',
   'Status',
   'Warden ID',
-  'Security ID' // Show as Security ID in column
+  'Security ID' 
 ];
 
 const colWidths = ['10%', '10%', '15%', '11%', '12%', '10%', '10%', '8%', '12%', '12%'];
@@ -33,11 +33,11 @@ export default function SecurityVisitorLog() {
     'Exit Time': '',
     'Status': 'Pending',
     'Warden ID': '',
-    'ID': localStorage.getItem('regNo') || '' // Security ID from localStorage
+    'ID': localStorage.getItem('regNo') || '' 
   });
 
   useEffect(() => {
-    // Set current date as default for Date field (yyyy-mm-dd) only if not already set
+    
     setSelectedRow(prev => {
       let newDate = prev['Date'];
       if (!newDate) {
@@ -49,7 +49,7 @@ export default function SecurityVisitorLog() {
       }
       return { ...prev, 'Date': newDate, 'Security ID': localStorage.getItem('regNo') || '' };
     });
-    // Set up interval to update entry time every second
+    
     const interval = setInterval(() => {
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, '0');
@@ -119,10 +119,10 @@ export default function SecurityVisitorLog() {
 
   const handleAdd = async () => {
     const token = localStorage.getItem('token');
-    // Format date as yyyy/MM/dd
+    
     const dateParts = (selectedRow['Date'] || '').split('-');
     const formattedDate = dateParts.length === 3 ? `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}` : selectedRow['Date'];
-    // Format entryTime and exitTime as hh.mm AM/PM
+   
     function formatTime(t) {
       if (!t) return '';
       const [h, m, s] = t.split(':');
@@ -162,7 +162,7 @@ export default function SecurityVisitorLog() {
 
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
-    // Format date as yyyy/MM/dd
+   
     const dateParts = (selectedRow['Date'] || '').split('-');
     const formattedDate = dateParts.length === 3 ? `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}` : selectedRow['Date'];
     function formatTime(t) {

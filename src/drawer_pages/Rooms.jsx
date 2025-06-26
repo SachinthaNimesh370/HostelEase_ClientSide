@@ -36,6 +36,13 @@ export default function Room() {
   });
 
   useEffect(() => {
+    // Set Warden ID based on role on mount
+    const role = localStorage.getItem('role');
+    const regNo = localStorage.getItem('regNo');
+    setSelectedRow(prev => ({
+      ...prev,
+      'Warden ID': role === 'Warden' ? regNo : ''
+    }));
     fetchRooms();
   }, []);
 
@@ -68,13 +75,15 @@ export default function Room() {
   };
 
   const handleClear = () => {
+    const role = localStorage.getItem('role');
+    const regNo = localStorage.getItem('regNo');
     setSelectedRow({
       'Room ID': '',
       'Room No': '',
       'Type': '',
       'AC': '',
       'Current Count': '',
-      'Warden ID': ''
+      'Warden ID': role === 'Warden' ? regNo : ''
     });
   };
 
@@ -154,6 +163,10 @@ export default function Room() {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
 
+  // Determine if buttons should be disabled based on role
+  const role = localStorage.getItem('role');
+  const isAdmin = role === 'Admin';
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -173,13 +186,14 @@ export default function Room() {
             onChange={handleFieldChange(header)}
             variant="outlined"
             size="small"
+            InputProps={header === 'Warden ID' ? { readOnly: true } : {}}
           />
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
-          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+          <Button variant="contained" color="primary" onClick={handleAdd} disabled={isAdmin}>Add</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate} disabled={isAdmin}>Update</Button>
+          <Button variant="contained" color="error" onClick={handleDelete} disabled={isAdmin}>Delete</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
     </Box>
