@@ -172,6 +172,10 @@ export default function Visitors() {
     }
   };
 
+  // Get role from localStorage
+  const role = localStorage.getItem('role');
+  const isAdmin = role === 'Admin';
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -197,6 +201,21 @@ export default function Visitors() {
               <MenuItem value="Pending">Pending</MenuItem>
               <MenuItem value="Approved">Approved</MenuItem>
             </TextField>
+          ) : header === 'Warden ID' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="N/A">N/A</MenuItem>
+              {role === 'Warden' && (
+                <MenuItem value={localStorage.getItem('regNo') || ''}>{localStorage.getItem('regNo') || 'Warden RegNo'}</MenuItem>
+              )}
+            </TextField>
           ) : (
             <TextField
               key={header}
@@ -212,10 +231,10 @@ export default function Visitors() {
           )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="primary" onClick={handleAdd}>Add</Button>
-          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+          <Button variant="contained" color="primary" onClick={handleAdd} disabled={isAdmin}>Add</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate} disabled={isAdmin}>Update</Button>
+          <Button variant="contained" color="error" onClick={handleDelete} disabled={isAdmin}>Delete</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
     </Box>
