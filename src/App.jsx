@@ -15,6 +15,8 @@ import Users from './drawer_pages/Users';
 import Security from './drawer_pages/Security';
 import DrawerStudent from "./main_pages/DrawerStudent";
 import ComplainStudent from './drawer_pages/ComplainStudent'; // Assuming this is a student-specific complain page
+import DrawerSecurity from "./main_pages/DrawerSecurity";
+import SecurityVisitorLog from './drawer_pages/SecurityVisitorLog';
 
 function App() {
   return (
@@ -39,9 +41,10 @@ function App() {
         {/* Student Drawer Layout */}
         <Route path="/drawerstu/*" element={<DrawerStudent />}>
           <Route path="complainStudent" element={<ComplainStudent />} />
-
-          
-          {/* Add more student-specific routes here if needed */}
+        </Route>
+        {/* Security Drawer Layout */}
+        <Route path="/drawersec/*" element={<DrawerSecurity />}>
+          <Route path="securityVisitorLog" element={<SecurityVisitorLog />} />
         </Route>
       </Routes>
     </BrowserRouter>
