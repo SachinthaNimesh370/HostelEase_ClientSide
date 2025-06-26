@@ -32,7 +32,9 @@ export default function SignIn() {
                 console.log("regNo is : " + regNo)
                 console.log("SignIn successful:", message);
                 if (role === 'student' || role === 'Student') {
-                    navigate('/drawerstu/dashboard');
+                    navigate('/drawerstu/complainStudent');
+                } else if (role === 'security' || role === 'Security') {
+                    navigate('/drawersec/securityVisitorLog');
                 } else {
                     navigate('/drawer/dashboard');
                 }
