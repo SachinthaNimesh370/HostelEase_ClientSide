@@ -1,4 +1,3 @@
-
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -19,24 +18,24 @@ export default function SignIn() {
             regNo: regNo,
             password: password
         };
-        
+        // Always save regNo to localStorage on button click
+        localStorage.setItem("regNo", regNo);
         axios.post('http://localhost:8090/api/v1/user/signin', userData)
             .then(response => {
                 const message = response.data;
-
                 const token = response.data.data.massage; 
                 const role = response.data.role.role;     
-
-                
                 localStorage.setItem("token", token);
                 localStorage.setItem("role", role);
                 console.log("token is : " + token)
                 console.log("role is : " + role)
-
+                console.log("regNo is : " + regNo)
                 console.log("SignIn successful:", message);
                 navigate('/drawer/dashboard');
         })
         .catch(error => {
+            // Remove regNo from localStorage if request fails (not 200)
+            localStorage.removeItem("regNo");
             const errorMessage = error.response?.data?.data || "Signin failed.";
             alert(errorMessage);
             console.error("SignIn failed:", errorMessage);

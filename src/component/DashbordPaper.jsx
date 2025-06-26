@@ -12,6 +12,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PieChartWithCenterLabel from './PieChatr';
 
+
 export default function DashbordPaper() {
   const [studentCount, setStudentCount] = useState(null);
   const [roomCount, setRoomCount] = useState(null);
@@ -252,16 +253,7 @@ export default function DashbordPaper() {
             </Typography>
           </Paper>
 
-           {/* Pie Chart: Payment */}
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minWidth: 260, background: 'linear-gradient(135deg, #e3f0ff 60%, #fafcff 100%)' }}>
-            <Typography fontWeight={600} color="#1976d2" mb={1} textAlign="center">
-              Hostel Occupancy
-            </Typography>
-            <PieChartWithCenterLabel />
-            <Typography fontSize={14} color="#1976d2" mt={1} textAlign="center">
-              80% occupied (160/200 beds)
-            </Typography>
-          </Paper>
+          
         </Box>
         
       </Box>
