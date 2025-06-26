@@ -3,13 +3,6 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { useDrawingArea } from '@mui/x-charts/hooks';
 import { styled } from '@mui/material/styles';
 
-const data = [
-  { value: 5, label: 'A' },
-  { value: 10, label: 'B' },
-  { value: 15, label: 'C' },
-  { value: 20, label: 'D' },
-];
-
 const size = {
   width: 200,
   height: 200,
@@ -31,10 +24,24 @@ function PieCenterLabel({ children }) {
   );
 }
 
-export default function PieChartWithCenterLabel() {
+/**
+ * PieChartWithCenterLabel
+ * @param {Object} props
+ * @param {Object} props.data - Pie chart data as an object
+ * @param {string|React.ReactNode} [props.centerLabel] - Center label for the pie chart
+ */
+export default function PieChartWithCenterLabel({ data, centerLabel }) {
+  // Transform data object to array for PieChart
+  const pieData = data
+    ? Object.entries(data).map(([key, value]) => ({
+        value: Number(value),
+        label: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+      }))
+    : [];
+
   return (
-    <PieChart series={[{ data, innerRadius: 80 }]} {...size}>
-      <PieCenterLabel>Center label</PieCenterLabel>
+    <PieChart series={[{ data: pieData, innerRadius: 80 }]} {...size}>
+      <PieCenterLabel>{centerLabel}</PieCenterLabel>
     </PieChart>
   );
 }
