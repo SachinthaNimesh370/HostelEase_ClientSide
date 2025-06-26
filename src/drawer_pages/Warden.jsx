@@ -89,6 +89,10 @@ export default function Warden() {
     }
   };
 
+  // Get role from localStorage
+  const role = localStorage.getItem('role');
+  const isWarden = role === 'Warden';
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TableTemplate
@@ -114,8 +118,8 @@ export default function Warden() {
           />
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate} disabled={isWarden}>Update</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isWarden}>Clear</Button>
         </Box>
       </Box>
     </Box>
