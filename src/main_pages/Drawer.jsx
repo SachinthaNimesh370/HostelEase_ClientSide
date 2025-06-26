@@ -28,6 +28,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
+import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
 
 
 const drawerWidth = 240;
@@ -35,8 +36,8 @@ const drawerWidth = 240;
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center', // Center horizontally
-  flexDirection: 'column',  // Stack icon and regNo vertically
+  justifyContent: 'center', 
+  flexDirection: 'column',  
   padding: theme.spacing(2, 2, 1, 2),
   minHeight: 80,
   background: 'transparent',
@@ -99,6 +100,7 @@ export default function DrawerLayout() {
     { text: 'Student', icon: <SchoolIcon />, path: 'students' },
     { text: 'Warden', icon: <PersonRoundedIcon />, path: 'warden' },
     { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
+    { text: 'Security', icon: <SecurityRoundedIcon />, path: 'security' },
     { text: 'Users', icon: <SupervisorAccountIcon />, path: 'users' },
     
   ];

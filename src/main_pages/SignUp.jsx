@@ -151,6 +151,7 @@ export default function SignUp() {
                         <MenuItem value={'Admin'}>Admin</MenuItem>
                         <MenuItem value={'Warden'}>Warden</MenuItem>
                         <MenuItem value={'Student'}>Student</MenuItem>
+                        <MenuItem value={'Security'}>Security</MenuItem>
                     </Select>
                 </FormControl>
             </Box>

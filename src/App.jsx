@@ -12,6 +12,7 @@ import Complain from './drawer_pages/Complain';
 import Admin from './drawer_pages/Admin';
 import Warden from './drawer_pages/Warden';
 import Users from './drawer_pages/Users';
+import Security from './drawer_pages/Security';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
           <Route path="visitors" element={<VisitorsLog />} />
           <Route path="admin" element={<Admin />} />
           <Route path="warden" element={<Warden />} />
-          <Route path="users" element={<Users />} /> 
+          <Route path="users" element={<Users />} />
+          <Route path="security" element={<Security />} />
         </Route>
       </Routes>
     </BrowserRouter>

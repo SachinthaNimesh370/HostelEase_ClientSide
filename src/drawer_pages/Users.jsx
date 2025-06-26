@@ -164,6 +164,35 @@ export default function Users() {
               <MenuItem value="Active">Active</MenuItem>
               <MenuItem value="Inactive">Inactive</MenuItem>
             </TextField>
+          ) : header === 'Role' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Admin">Admin</MenuItem>
+              <MenuItem value="Warden">Warden</MenuItem>
+              <MenuItem value="Student">Student</MenuItem>
+              <MenuItem value="Security">Security</MenuItem>
+            </TextField>
+          ) : header === 'Gender' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Male">Male</MenuItem>
+              <MenuItem value="Female">Female</MenuItem>
+            
+            </TextField>
           ) : (
             <TextField
               key={header}
