@@ -26,6 +26,10 @@ export default function Student() {
     'Room ID': ''
   });
 
+  // Get role and regNo from localStorage
+  const role = localStorage.getItem('role');
+  const regNo = localStorage.getItem('regNo');
+
   useEffect(() => {
     fetchStudents();
   }, []);
@@ -123,6 +127,15 @@ export default function Student() {
               <MenuItem value="3 Year">3 Year</MenuItem>
               <MenuItem value="4 Year">4 Year</MenuItem>
             </TextField>
+          ) : header === 'Warden ID' || header === 'Admin ID' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+            />
           ) : (
             <TextField
               key={header}
