@@ -91,11 +91,12 @@ export default function DrawerLayout() {
     { text: 'Complain', icon: <ReportProblemIcon />, path: 'complain' },
     { text: 'Payment', icon: <PaymentIcon />, path: 'payment' },
     { text: 'Visitors Log', icon: <Diversity3RoundedIcon />, path: 'visitors' },
+    { text: 'Room Allocation', icon: <SchoolIcon />, path: 'students' },
   ];
 
   const drawerItems2 = [
 
-    { text: 'Student', icon: <SchoolIcon />, path: 'students' },
+    
     { text: 'Warden', icon: <PersonRoundedIcon />, path: 'warden' },
     { text: 'Admin', icon: <AdminPanelSettingsIcon />, path: 'admin' },
     { text: 'Security', icon: <SecurityRoundedIcon />, path: 'security' },
