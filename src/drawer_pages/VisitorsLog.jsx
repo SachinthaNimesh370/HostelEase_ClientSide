@@ -119,7 +119,7 @@ export default function Visitors() {
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
     const payload = {
-      visitor_id: selectedRow['Visitor ID'],
+      visitor_id: selectedRow['Visitor ID'] ? Number(selectedRow['Visitor ID']) : undefined,
       nic: selectedRow['NIC'],
       name: selectedRow['Name'],
       date: selectedRow['Date'],
@@ -127,7 +127,8 @@ export default function Visitors() {
       exitTime: selectedRow['Exit Time'],
       state: selectedRow['Status'],
       student_id: selectedRow['Student ID'],
-      warden_id: selectedRow['Warden ID']
+      warden_id: selectedRow['Warden ID'],
+      security_id: localStorage.getItem('regNo') || ''
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/visitor/updatevisitor', payload, {
@@ -139,8 +140,10 @@ export default function Visitors() {
       console.log(res.data); 
       fetchVisitors();
       handleClear();
+      alert('Visitor updated successfully!');
     } catch (err) {
       console.log(err?.response?.data || err);
+      alert('Failed to update visitor.');
     }
   };
 
@@ -182,7 +185,7 @@ export default function Visitors() {
         headers={headers}
         rows={rows}
         tableWidth={1080}
-        tableHeight={650}
+        tableHeight={700}
         colWidths={colWidths}
         onRowClick={handleRowClick}
       />

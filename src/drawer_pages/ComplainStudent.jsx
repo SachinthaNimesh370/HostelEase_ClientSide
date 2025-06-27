@@ -189,6 +189,39 @@ export default function ComplainStudent() {
               <MenuItem value="Pending">Pending</MenuItem>
               {/* Only Pending for students */}
             </TextField>
+          ) : header === 'Category' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Living Conditions">Living Conditions</MenuItem>
+              <MenuItem value="Rules and Restrictions">Rules and Restrictions</MenuItem>
+              <MenuItem value="Food and Health">Food and Health</MenuItem>
+              <MenuItem value="Academic Difficulties">Academic Difficulties</MenuItem>
+              <MenuItem value="Financial Issues">Financial Issues</MenuItem>
+              <MenuItem value="Mental and Social Impact">Mental and Social Impact</MenuItem>
+              <MenuItem value="Infrastructure Problems">Infrastructure Problems</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextField>
+          ) : header === 'Content' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              multiline
+              minRows={6}
+              InputProps={{
+                readOnly: false
+              }}
+            />
           ) : (
             <TextField
               key={header}
