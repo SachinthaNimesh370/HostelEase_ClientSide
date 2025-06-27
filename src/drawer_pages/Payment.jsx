@@ -36,6 +36,13 @@ export default function Payment() {
 
   useEffect(() => {
     fetchPayments();
+   
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const currentDate = `${yyyy}-${mm}-${dd}`;
+    setSelectedRow(prev => ({ ...prev, 'Date': currentDate }));
   }, []);
 
   const fetchPayments = () => {
@@ -207,6 +214,15 @@ export default function Payment() {
                 <MenuItem value={regNo}>{regNo}</MenuItem>
               )}
             </TextField>
+          ) : header === 'Date' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              variant="outlined"
+              size="small"
+              InputProps={{ readOnly: true }}
+            />
           ) : (
             <TextField
               key={header}

@@ -19,7 +19,7 @@ const headers = [
   'Security ID' 
 ];
 
-const colWidths = ['10%', '10%', '15%', '11%', '12%', '10%', '10%', '8%', '12%', '12%'];
+const colWidths = ['10%', '10%', '14%', '11%', '12%', '11%', '10%', '8%', '12%', '12%'];
 
 export default function SecurityVisitorLog() {
   const [rows, setRows] = useState([]);
