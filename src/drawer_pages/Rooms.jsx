@@ -4,13 +4,14 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
 const headers = [
   'Room ID',
   'Room No',
-  'Type',
-  'AC',
+  'Capacity',
   'Current Count',
+  'AC',
   'Warden ID'
 ];
 
@@ -21,7 +22,7 @@ export default function Room() {
   const headerKeyMap = {
     'Room ID': 'Rid',
     'Room No': 'RoomNo',
-    'Type': 'Type',
+    'Capacity': 'Type',
     'AC': 'Ac',
     'Current Count': 'CurrentCount',
     'Warden ID': 'WardenId'
@@ -29,7 +30,7 @@ export default function Room() {
   const [selectedRow, setSelectedRow] = useState({
     'Room ID': '',
     'Room No': '',
-    'Type': '',
+    'Capacity': '',
     'AC': '',
     'Current Count': '',
     'Warden ID': ''
@@ -58,7 +59,7 @@ export default function Room() {
         const tableRows = massage.map(room => ({
           'Room ID': room.room_id,
           'Room No': room.roomNo,
-          'Type': room.type,
+          'Capacity': room.type, // previously 'Type', now 'Capacity'
           'AC': room.ac ? 'Yes' : 'No',
           'Current Count': room.currentCount,
           'Warden ID': room.warden?.warden_id || '',
@@ -80,7 +81,7 @@ export default function Room() {
     setSelectedRow({
       'Room ID': '',
       'Room No': '',
-      'Type': '',
+      'Capacity': '',
       'AC': '',
       'Current Count': '',
       'Warden ID': role === 'Warden' ? regNo : ''
@@ -92,7 +93,7 @@ export default function Room() {
     const payload = {
       room_id: selectedRow['Room ID'],
       roomNo: selectedRow['Room No'],
-      type: selectedRow['Type'],
+      type: selectedRow['Capacity'], // previously 'Type', now 'Capacity'
       ac: selectedRow['AC'] === 'Yes' || selectedRow['AC'] === true,
       currentCount: selectedRow['Current Count'],
       warden_id: selectedRow['Warden ID']
@@ -116,7 +117,7 @@ export default function Room() {
     const payload = {
       room_id: selectedRow['Room ID'],
       roomNo: selectedRow['Room No'],
-      type: selectedRow['Type'],
+      type: selectedRow['Capacity'], // previously 'Type', now 'Capacity'
       ac: selectedRow['AC'] === 'Yes' || selectedRow['AC'] === true,
       currentCount: selectedRow['Current Count'],
       warden_id: selectedRow['Warden ID']
@@ -179,15 +180,64 @@ export default function Room() {
       />
       <Box minWidth={300} display="flex" flexDirection="column" gap={2}>
         {headers.map((header, idx) => (
-          <TextField
-            key={header}
-            label={header}
-            value={selectedRow[header]}
-            onChange={handleFieldChange(header)}
-            variant="outlined"
-            size="small"
-            InputProps={header === 'Warden ID' ? { readOnly: true } : {}}
-          />
+          header === 'Capacity' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+            </TextField>
+          ) : header === 'Current Count' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              {(() => {
+                const cap = Number(selectedRow['Capacity']);
+                if (cap === 2) {
+                  return [0, 1, 2].map(v => <MenuItem key={v} value={v}>{v}</MenuItem>);
+                } else if (cap === 4) {
+                  return [0, 1, 2, 3, 4].map(v => <MenuItem key={v} value={v}>{v}</MenuItem>);
+                } else {
+                  return <MenuItem value={0}>0</MenuItem>;
+                }
+              })()}
+            </TextField>
+          ) : header === 'AC' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header] || 'No'}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="Yes">Yes</MenuItem>
+              <MenuItem value="No">No</MenuItem>
+            </TextField>
+          ) : (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              InputProps={header === 'Warden ID' ? { readOnly: true } : {}}
+            />
+          )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
           <Button variant="contained" color="primary" onClick={handleAdd} disabled={isAdmin}>Add</Button>

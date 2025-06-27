@@ -32,6 +32,12 @@ export default function Student() {
 
   useEffect(() => {
     fetchStudents();
+    // Set Admin ID or Warden ID based on role and regNo
+    if (role === 'Admin') {
+      setSelectedRow(prev => ({ ...prev, 'Admin ID': regNo }));
+    } else if (role === 'Warden') {
+      setSelectedRow(prev => ({ ...prev, 'Warden ID': regNo }));
+    }
   }, []);
 
   const fetchStudents = () => {
@@ -62,13 +68,32 @@ export default function Student() {
   };
 
   const handleClear = () => {
-    setSelectedRow({
-      'Student ID': '',
-      'Duration': '',
-      'Admin ID': '',
-      'Warden ID': '',
-      'Room ID': ''
-    });
+    // Set Admin ID or Warden ID based on role and regNo on clear
+    if (role === 'Admin') {
+      setSelectedRow({
+        'Student ID': '',
+        'Duration': '',
+        'Admin ID': regNo,
+        'Warden ID': '',
+        'Room ID': ''
+      });
+    } else if (role === 'Warden') {
+      setSelectedRow({
+        'Student ID': '',
+        'Duration': '',
+        'Admin ID': '',
+        'Warden ID': regNo,
+        'Room ID': ''
+      });
+    } else {
+      setSelectedRow({
+        'Student ID': '',
+        'Duration': '',
+        'Admin ID': '',
+        'Warden ID': '',
+        'Room ID': ''
+      });
+    }
   };
 
   const handleFieldChange = (header) => (event) => {
