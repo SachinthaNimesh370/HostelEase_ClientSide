@@ -92,7 +92,7 @@ export default function Users() {
   
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
-
+    const adminId = localStorage.getItem('regNo') || '';
     const stateBool = selectedRow['Status'] === 'Active';
     const payload = {
       regNo: selectedRow['User ID'],
@@ -103,7 +103,8 @@ export default function Users() {
       role: selectedRow['Role'],
       gender: selectedRow['Gender'],
       state: stateBool,
-      password: selectedRow.password || ''
+      password: selectedRow.password || '',
+      admin_id: adminId
     };
     try {
       await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {

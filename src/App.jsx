@@ -3,7 +3,7 @@ import SignIn from "./main_pages/SignIn";
 import SignUp from "./main_pages/SignUp";
 import DrawerLayout from "./main_pages/Drawer"; // Rename for clarity
 import VisitorsLog from './drawer_pages/VisitorsLog';
-import Student from './drawer_pages/Student';
+import Student from './drawer_pages/RoomAllocation';
 import Rooms from './drawer_pages/Rooms';
 import Payment from './drawer_pages/Payment';
 

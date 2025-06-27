@@ -29,14 +29,15 @@ export default function Student() {
   // Get role and regNo from localStorage
   const role = localStorage.getItem('role');
   const regNo = localStorage.getItem('regNo');
+  const isAdmin = role === 'Admin';
 
   useEffect(() => {
     fetchStudents();
     // Set Admin ID or Warden ID based on role and regNo
     if (role === 'Admin') {
-      setSelectedRow(prev => ({ ...prev, 'Admin ID': regNo }));
+      setSelectedRow(prev => ({ ...prev, 'Admin ID': regNo, 'Warden ID': '' }));
     } else if (role === 'Warden') {
-      setSelectedRow(prev => ({ ...prev, 'Warden ID': regNo }));
+      setSelectedRow(prev => ({ ...prev, 'Warden ID': regNo, 'Admin ID': '' }));
     }
   }, []);
 
@@ -152,7 +153,22 @@ export default function Student() {
               <MenuItem value="3 Year">3 Year</MenuItem>
               <MenuItem value="4 Year">4 Year</MenuItem>
             </TextField>
-          ) : header === 'Warden ID' || header === 'Admin ID' ? (
+          ) : header === 'Warden ID' ? (
+            <TextField
+              key={header}
+              label={header}
+              value={selectedRow[header]}
+              onChange={handleFieldChange(header)}
+              variant="outlined"
+              size="small"
+              select
+            >
+              <MenuItem value="N/A">N/A</MenuItem>
+              {role === 'Warden' && regNo && (
+                <MenuItem value={regNo}>{regNo}</MenuItem>
+              )}
+            </TextField>
+          ) : header === 'Admin ID' ? (
             <TextField
               key={header}
               label={header}
@@ -176,8 +192,8 @@ export default function Student() {
           )
         ))}
         <Box display="flex" flexDirection="column" gap={1} mt={2}>
-          <Button variant="contained" color="warning" onClick={handleUpdate}>Update</Button>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
+          <Button variant="contained" color="warning" onClick={handleUpdate} disabled={isAdmin}>Update</Button>
+          <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
     </Box>
