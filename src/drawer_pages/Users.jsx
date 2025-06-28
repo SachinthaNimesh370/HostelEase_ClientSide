@@ -165,12 +165,13 @@ export default function Users() {
         state: selectedRow['Status'] === 'Active',
         password: selectedRow.password || ''
       };
-      await axios.post('http://localhost:8090/api/v1/user/deleteuser', payload, {
+      const deleteRes = await axios.post('http://localhost:8090/api/v1/user/deleteuser', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
+      console.log('Delete user response:', deleteRes.data);
       // Refresh user list
       const res2 = await axios.get('http://localhost:8090/api/v1/user/getalluser', {
         headers: { Authorization: `Bearer ${token}` }
@@ -191,6 +192,7 @@ export default function Users() {
       handleClear();
     } catch (err) {
       // handle error
+      console.log('Delete user error:', err);
     }
   };
 
