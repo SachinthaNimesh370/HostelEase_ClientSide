@@ -5,6 +5,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Visitor ID',
@@ -33,6 +34,7 @@ export default function Visitors() {
     'Status': '',
     'Warden ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   useEffect(() => {
     fetchVisitors();
@@ -137,13 +139,11 @@ export default function Visitors() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchVisitors();
       handleClear();
-      alert('Visitor updated successfully!');
+      setAlert({ open: true, message: res.data?.data?.massage || 'Visitor updated successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
-      alert('Failed to update visitor.');
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to update visitor.', severity: 'error' });
     }
   };
 
@@ -167,13 +167,21 @@ export default function Visitors() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchVisitors();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Visitor deleted successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to delete visitor.', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   // Get role from localStorage
   const role = localStorage.getItem('role');
@@ -240,6 +248,11 @@ export default function Visitors() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

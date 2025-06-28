@@ -7,6 +7,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
 import { useState } from 'react';
+import Alert from '../component/Alert';
 
 
 
@@ -22,6 +23,7 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('');
     const [gender, setGender] = useState('');
+    const [alert, setAlert] = useState({ open: false, severity: 'success', message: '' });
 
     const handleChangeRole = (event) => {
         setRole(event.target.value);
@@ -33,8 +35,8 @@ export default function SignUp() {
 
 
     const handleSignUp = () => {
-        if (password !== confirmPassword || password===null) {
-            alert("Passwords do not match");
+        if (password !== confirmPassword || password === null) {
+            setAlert({ open: true, severity: 'error', message: 'Passwords do not match' });
             return;
         }
         const userData = {
@@ -50,37 +52,42 @@ export default function SignUp() {
 
         axios.post('http://localhost:8090/api/v1/user/signup', userData)
             .then(response => {
-            const message = response.data.data; 
-            alert(message);                     
-            console.log("Signup successful:", message);
-            navigate('/');
+                const message = response.data.data;
+                setAlert({ open: true, severity: 'success', message });
+                setTimeout(() => navigate('/'), 1200);
+                console.log("Signup successful:", message);
             })
             .catch(error => {
                 const errorMessage = error.response?.data?.data || "Signup failed.";
-                alert(errorMessage);                
+                setAlert({ open: true, severity: 'error', message: errorMessage });
                 console.error("Signup failed:", errorMessage);
-        });
+            });
         
     };
 
   return (
     <Box 
-        sx={{
-        minHeight: '100vh',
-        minWidth: '100vw',
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        background: '#f5f6fa',
       }}        
     >
-        {/* Form Area */}
-        <Box
-            border={1}
-            borderColor="grey.400"
-            borderRadius="7px"
-            sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
-           
-        >
+      {/* Form Area */}
+      <Box
+        border={1}
+        borderColor="grey.400"
+        borderRadius="7px"
+        sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
+      >
+            
             <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
                         Sign In
             </Typography>
@@ -212,10 +219,12 @@ export default function SignUp() {
                 <Typography>Already have an account?</Typography>
                 <Button variant="text" onClick={() => navigate('/')}>Sign In</Button>
         </Box>
-        </Box>
-        
-        
-        
+        {alert.open && (
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, open: false })} sx={{ mb: 2 }}>
+            {alert.message}
+          </Alert>
+        )}
+      </Box>
     </Box>
     
   )

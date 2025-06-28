@@ -5,6 +5,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Room ID',
@@ -35,6 +36,7 @@ export default function Room() {
     'Current Count': '',
     'Warden ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   useEffect(() => {
     // Set Warden ID based on role on mount
@@ -93,13 +95,13 @@ export default function Room() {
     const payload = {
       room_id: selectedRow['Room ID'],
       roomNo: selectedRow['Room No'],
-      type: selectedRow['Capacity'], // previously 'Type', now 'Capacity'
+      type: selectedRow['Capacity'],
       ac: selectedRow['AC'] === 'Yes' || selectedRow['AC'] === true,
       currentCount: selectedRow['Current Count'],
       warden_id: selectedRow['Warden ID']
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/room/newroom', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/room/newroom', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -107,8 +109,9 @@ export default function Room() {
       });
       fetchRooms();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Room added successfully!', severity: 'success' });
     } catch (err) {
- 
+      setAlert({ open: true, message: err.response?.data?.message || 'Failed to add room', severity: 'error' });
     }
   };
 
@@ -117,13 +120,13 @@ export default function Room() {
     const payload = {
       room_id: selectedRow['Room ID'],
       roomNo: selectedRow['Room No'],
-      type: selectedRow['Capacity'], // previously 'Type', now 'Capacity'
+      type: selectedRow['Capacity'],
       ac: selectedRow['AC'] === 'Yes' || selectedRow['AC'] === true,
       currentCount: selectedRow['Current Count'],
       warden_id: selectedRow['Warden ID']
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/room/updateroom', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/room/updateroom', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -131,10 +134,11 @@ export default function Room() {
       });
       fetchRooms();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Room updated successfully!', severity: 'success' });
     } catch (err) {
+      setAlert({ open: true, message: err.response?.data?.message || 'Failed to update room', severity: 'error' });
     }
   };
-
 
   const handleDelete = async () => {
     const token = localStorage.getItem('token');
@@ -147,7 +151,7 @@ export default function Room() {
       warden_id: ''
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/room/deleteroom', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/room/deleteroom', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -155,14 +159,23 @@ export default function Room() {
       });
       fetchRooms();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Room deleted successfully!', severity: 'success' });
     } catch (err) {
-
+      setAlert({ open: true, message: err.response?.data?.message || 'Failed to delete room', severity: 'error' });
     }
   };
 
   const handleFieldChange = (header) => (event) => {
     setSelectedRow(prev => ({ ...prev, [header]: event.target.value }));
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   // Determine if buttons should be disabled based on role
   const role = localStorage.getItem('role');
@@ -246,6 +259,11 @@ export default function Room() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

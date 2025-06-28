@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Complain ID',
@@ -28,6 +29,7 @@ export default function ComplainStudent() {
     'Status': 'Pending',
     // 'Warden ID' removed for student view
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   // Fetch only this student's complains
   const fetchComplains = async () => {
@@ -148,7 +150,7 @@ export default function ComplainStudent() {
       warden_id: ''
     };
     try {
-      await fetch('http://localhost:8090/api/v1/complain/newcomplain', {
+      const res = await fetch('http://localhost:8090/api/v1/complain/newcomplain', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -156,13 +158,22 @@ export default function ComplainStudent() {
         },
         body: JSON.stringify(payload)
       });
+      const data = await res.json();
       handleClear();
       await fetchComplains();
-      alert('Complain submitted successfully!');
+      setAlert({ open: true, message: data?.data?.massage || 'Complain submitted successfully!', severity: 'success' });
     } catch (error) {
-      alert('Failed to submit complain.');
+      setAlert({ open: true, message: error?.message || 'Failed to submit complain.', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   return (
     <Box display="flex" flexDirection="row" gap={2} mt={6}>
@@ -246,6 +257,11 @@ export default function ComplainStudent() {
           <Button variant="outlined" color="secondary" onClick={handleClear}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   );
 }

@@ -5,6 +5,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Payment ID',
@@ -29,8 +30,8 @@ export default function Payment() {
     'Status': '',
     'Warden ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
-  
   const role = localStorage.getItem('role');
   const regNo = localStorage.getItem('regNo');
 
@@ -108,11 +109,11 @@ export default function Payment() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data);
       fetchPayments();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Payment added successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to add payment', severity: 'error' });
     }
   };
 
@@ -134,11 +135,11 @@ export default function Payment() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchPayments();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Payment updated successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to update payment', severity: 'error' });
     }
   };
 
@@ -160,15 +161,22 @@ export default function Payment() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchPayments();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Payment deleted successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to delete payment', severity: 'error' });
     }
   };
 
-  
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
+
   const isAdmin = role === 'Admin';
 
   return (
@@ -244,6 +252,11 @@ export default function Payment() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

@@ -5,6 +5,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Student ID',
@@ -25,6 +26,7 @@ export default function Student() {
     'Warden ID': '',
     'Room ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   // Get role and regNo from localStorage
   const role = localStorage.getItem('role');
@@ -103,7 +105,6 @@ export default function Student() {
 
   const handleUpdate = async () => {
     const token = localStorage.getItem('token');
- 
     const payload = {
       student_id: selectedRow['Student ID'],
       duration: selectedRow['Duration'],
@@ -118,13 +119,21 @@ export default function Student() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchStudents();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Room allocation updated successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to update room allocation', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   return (
     <Box display="flex" flexDirection="row" gap={2}>
@@ -196,6 +205,11 @@ export default function Student() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

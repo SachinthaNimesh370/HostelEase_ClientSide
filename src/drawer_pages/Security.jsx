@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '../component/Alert';
 
 const headers = [
   'Admin ID',
@@ -30,6 +31,7 @@ export default function Security() {
     'Gender': '',
     'Status': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   useEffect(() => {
     fetchAdmins();
@@ -98,7 +100,7 @@ export default function Security() {
       password: '' 
     };
     try {
-      await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {
+      const res = await axios.post('http://localhost:8090/api/v1/user/userupdate', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -106,10 +108,19 @@ export default function Security() {
       });
       fetchAdmins();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'User updated successfully!', severity: 'success' });
     } catch (err) {
-      
+      setAlert({ open: true, message: err.response?.data?.message || 'Failed to update user', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   // Get role from localStorage
   const role = localStorage.getItem('role');
@@ -141,6 +152,11 @@ export default function Security() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isWarden}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }
