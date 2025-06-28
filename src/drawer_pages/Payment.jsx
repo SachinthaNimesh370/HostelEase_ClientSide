@@ -99,7 +99,7 @@ export default function Payment() {
       date: selectedRow['Date'],
       status: selectedRow['Status'],
       student_id: selectedRow['Student ID'],
-      wardenId: selectedRow['Warden ID'] || ""
+      warden_id: selectedRow['Warden ID'] || ""
     };
     try {
       const res = await axios.post('http://localhost:8090/api/v1/payment/newpayment', payload, {
