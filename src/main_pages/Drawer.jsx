@@ -9,7 +9,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -65,12 +64,12 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
-  background: 'linear-gradient(135deg, #e3f0ff 0%, #fafcff 100%)',
+  background: 'linear-gradient(135deg, #fafcff 0%, #fafcff 100%)',
   borderRight: 'none',
   boxShadow: '2px 0 16px 0 rgba(32,116,212,0.10)',
   '& .MuiDrawer-paper': {
     width: drawerWidth,
-    background: 'linear-gradient(135deg, #e3f0ff 0%, #fafcff 100%)',
+    background: 'linear-gradient(135deg, #fafcff 0%, #fafcff 100%)',
     borderRight: 'none',
     boxShadow: '2px 0 16px 0 rgba(32,116,212,0.10)',
     color: '#1976d2',
@@ -129,7 +128,7 @@ export default function DrawerLayout() {
             edge="start"
             sx={{ marginRight: 5 }}
           >
-            <MenuIcon />
+           
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Hostel Management

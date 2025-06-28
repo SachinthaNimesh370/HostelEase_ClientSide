@@ -11,6 +11,8 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PieChartWithCenterLabel from './PieChatr';
+import Calander from './Calander';
+import DashboardCard from './DashboardCard';
 
 
 export default function DashbordPaper() {
@@ -140,7 +142,7 @@ export default function DashbordPaper() {
           boxShadow: 2,
           borderRadius: 3,
           p: 3,
-          background: 'linear-gradient(135deg, #fafcff 0%, #fafcff 100%)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #ffffff 100%)',
           height: 715,
         }}
       >
@@ -150,110 +152,107 @@ export default function DashbordPaper() {
         <Grid container spacing={2} justifyContent="space-between">
           {/* Students */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFE2E5 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#FA5A7D', width: 48, height: 48, mb: 1 }}>
-                  <PeopleAltIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#FA5A7D" fontWeight={700}>Students</Typography>
-                <Typography fontSize={32} color="#FA5A7D" fontWeight={700}>
-                  {studentCount !== null ? studentCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={80} sx={{ width: '80%', mt: 1, bgcolor: '#ffe2e5', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<PeopleAltIcon fontSize="large" />}
+              value={studentCount !== null ? studentCount : '...'}
+              label="Students"
+              avatarColor="#FA5A7D"
+              valueColor="#FA5A7D"
+              labelColor="#FA5A7D"
+              bgGradient="linear-gradient(135deg,rgb(255, 212, 216) , #ffffff)"
+              progress={80}
+              progressColor="#ffe2e5"
+            />
           </Grid>
           {/* Rooms */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFF4DE 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#FF947A', width: 48, height: 48, mb: 1 }}>
-                  <MeetingRoomIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#FF947A" fontWeight={700}>Rooms</Typography>
-                <Typography fontSize={32} color="#FF947A" fontWeight={700}>
-                  {roomCount !== null ? roomCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={60} sx={{ width: '80%', mt: 1, bgcolor: '#fff4de', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<MeetingRoomIcon fontSize="large" />}
+              value={roomCount !== null ? roomCount : '...'}
+              label="Rooms"
+              avatarColor="#FF947A"
+              valueColor="#FF947A"
+              labelColor="#FF947A"
+              bgGradient="linear-gradient(135deg, #FFF4DE 60%, #fff 100%)"
+              progress={60}
+              progressColor="#fff4de"
+            />
           </Grid>
-          
           {/* Available Rooms */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #F3E8FF 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#BF83FF', width: 48, height: 48, mb: 1 }}>
-                  <TrendingUpIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#BF83FF" fontWeight={700}>Available Rooms</Typography>
-                <Typography fontSize={32} color="#BF83FF" fontWeight={700}>
-                  {availableRoomCount !== null ? availableRoomCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={50} sx={{ width: '80%', mt: 1, bgcolor: '#f3e8ff', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<TrendingUpIcon fontSize="large" />}
+              value={availableRoomCount !== null ? availableRoomCount : '...'}
+              label="Available Rooms"
+              avatarColor="#FFD600"
+              valueColor="#FFA000"
+              labelColor="#FFA000"
+              bgGradient="linear-gradient(135deg,rgb(253, 248, 205) 60%, #fff 100%)"
+              progress={50}
+              progressColor="#fff9c4"
+            />
           </Grid>
           {/* Complaints Pending */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #FFF9C4 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#FFD600', width: 48, height: 48, mb: 1 }}>
-                  <ErrorOutlineIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#FFA000" fontWeight={700}>Complaints Pending</Typography>
-                <Typography fontSize={32} color="#FFA000" fontWeight={700}>
-                  {pendingComplainCount !== null ? pendingComplainCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={30} sx={{ width: '80%', mt: 1, bgcolor: '#fff9c4', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<ErrorOutlineIcon fontSize="large" />}
+              value={pendingComplainCount !== null ? pendingComplainCount : '...'}
+              label="Complaints Pending"
+              avatarColor="#BF83FF"
+              valueColor="#BF83FF"
+              labelColor="#BF83FF"
+              bgGradient="linear-gradient(135deg, #F3E8FF 60%, #ffffff 100%)"
+              progress={30}
+              progressColor="#f3e8ff"
+            />
           </Grid>
           {/* Pending Visitors */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #E3F2FD 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#29B6F6', width: 48, height: 48, mb: 1 }}>
-                  <GroupAddIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#29B6F6" fontWeight={700}>Pending Visitors</Typography>
-                <Typography fontSize={32} color="#29B6F6" fontWeight={700}>
-                  {pendingVisitorCount !== null ? pendingVisitorCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={20} sx={{ width: '80%', mt: 1, bgcolor: '#e3f2fd', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<GroupAddIcon fontSize="large" />}
+              value={pendingVisitorCount !== null ? pendingVisitorCount : '...'}
+              label="Pending Visitors"
+              avatarColor="#29B6F6"
+              valueColor="#29B6F6"
+              labelColor="#29B6F6"
+              bgGradient="linear-gradient(135deg, #E3F2FD 60%, #fff 100%)"
+              progress={20}
+              progressColor="#e3f2fd"
+            />
           </Grid>
           {/* Pending Payments */}
           <Grid item>
-            <Paper elevation={4} sx={{ background: 'linear-gradient(135deg, #E0F7FA 60%, #fff 100%)', borderRadius: 2, minWidth: 200 }}>
-              <Box display='flex' flexDirection='column' alignItems='center' p={2}>
-                <Avatar sx={{ bgcolor: '#00ACC1', width: 48, height: 48, mb: 1 }}>
-                  <CheckCircleIcon fontSize="large" />
-                </Avatar>
-                <Typography fontSize={18} color="#00ACC1" fontWeight={700}>Pending Payments</Typography>
-                <Typography fontSize={32} color="#00ACC1" fontWeight={700}>
-                  {pendingPaymentCount !== null ? pendingPaymentCount : '...'}
-                </Typography>
-                <LinearProgress variant="determinate" value={70} sx={{ width: '80%', mt: 1, bgcolor: '#e0f7fa', height: 6, borderRadius: 3 }} />
-              </Box>
-            </Paper>
+            <DashboardCard
+              icon={<CheckCircleIcon fontSize="large" />}
+              value={pendingPaymentCount !== null ? pendingPaymentCount : '...'}
+              label="Pending Payments"
+              avatarColor="#00ACC1"
+              valueColor="#00ACC1"
+              labelColor="#00ACC1"
+              bgGradient="linear-gradient(135deg, #E0F7FA 60%, #fff 100%)"
+              progress={70}
+              progressColor="#e0f7fa"
+            />
           </Grid>
         </Grid>
         <Divider sx={{ my: 4 }} />
         {/* Pie Chart: Hostel Occupancy */}
-        <Box display="flex" justifyContent="center" alignItems="center" my={2} gap={4}>
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minWidth: 260, background: 'linear-gradient(135deg, #e3f0ff 60%, #fafcff 100%)' }}>
-            <Typography fontWeight={600} color="#1976d2" mb={1} textAlign="center">
-              Hostel Occupancy
-            </Typography>
-            <PieChartWithCenterLabel data={occupancyData} centerLabel={occupancyLabel.split(' ')[0]} />
-            <Typography fontSize={14} color="#1976d2" mt={1} textAlign="center">
-              {occupancyLabel}
-            </Typography>
-          </Paper>
-
-          
+        <Box display="flex" 
+        justifyContent="center" alignItems="center" my={2} gap={8} 
+        sx={{
+          p: 3,
+          borderRadius: 4,
+          minWidth: 700 ,
+          maxHeight: 600,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 8, // increased gap for more space between
+        }}>
+          <PieChartWithCenterLabel data={occupancyData} centerLabel={occupancyLabel.split(' ')[0]} label={occupancyLabel} />
+          <Box>
+            <Calander />
+          </Box>
         </Box>
         
       </Box>
