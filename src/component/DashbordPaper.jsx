@@ -11,6 +11,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PieChartWithCenterLabel from './PieChatr';
+import Calander from './Calander';
 
 
 export default function DashbordPaper() {
@@ -242,18 +243,22 @@ export default function DashbordPaper() {
         </Grid>
         <Divider sx={{ my: 4 }} />
         {/* Pie Chart: Hostel Occupancy */}
-        <Box display="flex" justifyContent="center" alignItems="center" my={2} gap={4}>
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minWidth: 260, background: 'linear-gradient(135deg, #e3f0ff 60%, #fafcff 100%)' }}>
-            <Typography fontWeight={600} color="#1976d2" mb={1} textAlign="center">
-              Hostel Occupancy
-            </Typography>
-            <PieChartWithCenterLabel data={occupancyData} centerLabel={occupancyLabel.split(' ')[0]} />
-            <Typography fontSize={14} color="#1976d2" mt={1} textAlign="center">
-              {occupancyLabel}
-            </Typography>
-          </Paper>
-
-          
+        <Box display="flex" 
+        justifyContent="center" alignItems="center" my={2} gap={8} 
+        sx={{
+          p: 3,
+          borderRadius: 4,
+          minWidth: 700 ,
+          maxHeight: 600,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 8, // increased gap for more space between
+        }}>
+          <PieChartWithCenterLabel data={occupancyData} centerLabel={occupancyLabel.split(' ')[0]} label={occupancyLabel} />
+          <Box>
+            <Calander />
+          </Box>
         </Box>
         
       </Box>

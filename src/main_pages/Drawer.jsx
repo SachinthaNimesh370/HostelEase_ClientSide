@@ -9,7 +9,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -129,7 +128,7 @@ export default function DrawerLayout() {
             edge="start"
             sx={{ marginRight: 5 }}
           >
-            <MenuIcon />
+           
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Hostel Management
