@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'Complain ID',
@@ -28,6 +29,7 @@ export default function Complain() {
     'Status': '',
     'Warden ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
  
   const fetchComplains = async () => {
@@ -109,7 +111,7 @@ export default function Complain() {
       warden_id: selectedRow['Warden ID']
     };
     try {
-      await fetch('http://localhost:8090/api/v1/complain/updatecomplain', {
+      const res = await fetch('http://localhost:8090/api/v1/complain/updatecomplain', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -117,11 +119,12 @@ export default function Complain() {
         },
         body: JSON.stringify(payload)
       });
-      
+      const data = await res.json();
       await fetchComplains();
       handleClear();
+      setAlert({ open: true, message: data?.data?.massage || 'Complain updated successfully!', severity: 'success' });
     } catch (error) {
-      
+      setAlert({ open: true, message: error?.message || 'Failed to update complain', severity: 'error' });
     }
   };
 
@@ -139,7 +142,7 @@ export default function Complain() {
       warden_id: selectedRow['Warden ID']
     };
     try {
-      await fetch('http://localhost:8090/api/v1/complain/deletecomplain', {
+      const res = await fetch('http://localhost:8090/api/v1/complain/deletecomplain', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -147,13 +150,22 @@ export default function Complain() {
         },
         body: JSON.stringify(payload)
       });
-      
+      const data = await res.json();
       await fetchComplains();
       handleClear();
+      setAlert({ open: true, message: data?.data?.massage || 'Complain deleted successfully!', severity: 'success' });
     } catch (error) {
-      
+      setAlert({ open: true, message: error?.message || 'Failed to delete complain', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   const role = localStorage.getItem('role');
   const isAdmin = role === 'Admin';
@@ -223,6 +235,11 @@ export default function Complain() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isAdmin}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

@@ -5,6 +5,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Alert from '../component/Alert';
 
 const headers = [
   'User ID',
@@ -32,6 +33,7 @@ export default function Users() {
     'Status': '',
     password: '' 
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -135,8 +137,9 @@ export default function Users() {
       });
       setRows(mappedUsers);
       handleClear();
+      setAlert({ open: true, message: 'User updated successfully!', severity: 'success' });
     } catch (err) {
-      
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to update user', severity: 'error' });
     }
   };
 
@@ -151,7 +154,10 @@ export default function Users() {
       const users = res?.data?.data?.massage || [];
       const found = users.find(u => u.regNo === selectedRow['User ID']);
       userId = found ? found.id : null;
-      if (!userId) return;
+      if (!userId) {
+        setAlert({ open: true, message: 'User not found for deletion.', severity: 'error' });
+        return;
+      }
       // Only send flat, primitive values in the payload (no nested objects)
       const payload = {
         id: userId,
@@ -171,7 +177,6 @@ export default function Users() {
           'Content-Type': 'application/json'
         }
       });
-      console.log('Delete user response:', deleteRes.data);
       // Refresh user list
       const res2 = await axios.get('http://localhost:8090/api/v1/user/getalluser', {
         headers: { Authorization: `Bearer ${token}` }
@@ -190,11 +195,19 @@ export default function Users() {
       }));
       setRows(mappedUsers);
       handleClear();
+      setAlert({ open: true, message: deleteRes.data?.data?.massage || 'User deleted successfully!', severity: 'success' });
     } catch (err) {
-      // handle error
-      console.log('Delete user error:', err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to delete user', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   // Get role from localStorage
   const role = localStorage.getItem('role');
@@ -275,6 +288,11 @@ export default function Users() {
           
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

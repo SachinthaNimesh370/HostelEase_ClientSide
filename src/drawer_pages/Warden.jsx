@@ -4,6 +4,7 @@ import TableTemplate from '../component/TableTemplate';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '../component/Alert';
 
 const headers = [
   'Warden ID',
@@ -22,6 +23,7 @@ export default function Warden() {
     'Block': '',
     'Admin ID': ''
   });
+  const [alert, setAlert] = useState({ open: false, message: '', severity: 'info' });
 
   useEffect(() => {
     fetchWardens();
@@ -81,13 +83,21 @@ export default function Warden() {
           'Content-Type': 'application/json'
         }
       });
-      console.log(res.data); 
       fetchWardens();
       handleClear();
+      setAlert({ open: true, message: res.data?.data?.massage || 'Warden updated successfully!', severity: 'success' });
     } catch (err) {
-      console.log(err?.response?.data || err);
+      setAlert({ open: true, message: err?.response?.data?.message || 'Failed to update warden', severity: 'error' });
     }
   };
+
+  // Auto-hide alert after 3 seconds
+  useEffect(() => {
+    if (alert.open) {
+      const timer = setTimeout(() => setAlert(a => ({ ...a, open: false })), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert.open]);
 
   // Get role from localStorage
   const role = localStorage.getItem('role');
@@ -122,6 +132,11 @@ export default function Warden() {
           <Button variant="outlined" color="secondary" onClick={handleClear} disabled={isWarden}>Clear</Button>
         </Box>
       </Box>
+      {alert.open && alert.message && (
+        <Alert severity={alert.severity} onClose={() => setAlert(a => ({ ...a, open: false }))}>
+          {alert.message}
+        </Alert>
+      )}
     </Box>
   )
 }

@@ -2,16 +2,18 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import Alert from '../component/Alert';
 
 export default function SignIn() {
     const navigate = useNavigate();
     const [regNo, setRegNo] = useState('');
     const [password, setPassword] = useState('');
+    const [alert, setAlert] = useState({ open: false, severity: 'success', message: '' });
 
 
     const handleSignIn = () => {
         if (regNo === null || password === null) {
-            alert("Passwords do not match");
+            setAlert({ open: true, severity: 'error', message: 'Passwords do not match' });
             return;
         }
         const userData = {
@@ -22,58 +24,73 @@ export default function SignIn() {
         localStorage.setItem("regNo", regNo);
         axios.post('http://localhost:8090/api/v1/user/signin', userData)
             .then(response => {
-                const message = response.data;
-                const token = response.data.data.massage; 
-                const role = response.data.role.role;     
-                localStorage.setItem("token", token);
-                localStorage.setItem("role", role);
-                console.log("token is : " + token)
-                console.log("role is : " + role)
-                console.log("regNo is : " + regNo)
-                console.log("SignIn successful:", message);
-                if (role === 'student' || role === 'Student') {
-                    navigate('/drawerstu/complainStudent');
-                } else if (role === 'security' || role === 'Security') {
-                    navigate('/drawersec/securityVisitorLog');
+                const res = response.data;
+                if (res.code === 200) {
+                    const token = res.data.massage;
+                    const role = res.role.role;
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("role", role);
+                    setAlert({ open: true, severity: 'success', message: 'Sign in successful!' });
+                    setTimeout(() => {
+                        if (role === 'student' || role === 'Student') {
+                            navigate('/drawerstu/complainStudent');
+                        } else if (role === 'security' || role === 'Security') {
+                            navigate('/drawersec/securityVisitorLog');
+                        } else {
+                            navigate('/drawer/dashboard');
+                        }
+                    }, 800);
                 } else {
-                    navigate('/drawer/dashboard');
+                    // If code is not 200, show error from data.massage if present
+                    localStorage.removeItem("regNo");
+                    const errorMsg = res.data?.massage || res.message || 'Signin failed.';
+                    setAlert({ open: true, severity: 'error', message: errorMsg });
                 }
-        })
-        .catch(error => {
-            // Remove regNo from localStorage if request fails (not 200)
-            localStorage.removeItem("regNo");
-            const errorMessage = error.response?.data?.data || "Signin failed.";
-            alert(errorMessage);
-            console.error("SignIn failed:", errorMessage);
-        });
-        
+            })
+            .catch(error => {
+                // Remove regNo from localStorage if request fails (not 200)
+                localStorage.removeItem("regNo");
+                // Try to get error message from backend response (prefer data.massage)
+                let errorMessage = error.response?.data?.data?.massage || error.response?.data?.message || error.response?.data?.massage || "Signin failed.";
+                setAlert({ open: true, severity: 'error', message: errorMessage });
+            });
     };
 
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        minWidth: '100vw',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        background: '#f5f6fa',
       }}
     >
+      <Box
+        display="flex"
+        flexDirection={'column'}
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        {alert.open && (
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, open: false })} sx={{ mb: 2 }}>
+            {alert.message}
+          </Alert>
+        )}
+        {/* Form Field */}
         <Box
-            display="flex"
-            flexDirection={'column'}
-            justifyContent="center"
-            alignItems="center"
-            minHeight="100vh"
+          border={1}
+          borderColor="grey.400"
+          borderRadius="7px"
+          sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
         >
-            {/* Form Field */}
-            <Box
-                border={1}
-                borderColor="grey.400"
-                borderRadius="7px"
-                sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
-            >
             <Box>
                 <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
                         Sign In
