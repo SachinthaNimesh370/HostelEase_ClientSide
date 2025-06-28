@@ -48,6 +48,9 @@ export default function Calander({ value, onChange, label = 'Select Date' }) {
           gap: 2,
           boxShadow: 'none',
           border: 'none',
+          '&:hover': {
+          boxShadow: '0 15px 40px 0 rgba(30, 64, 175, 0.18)',
+        },
         }}
       >
         
@@ -59,7 +62,7 @@ export default function Calander({ value, onChange, label = 'Select Date' }) {
             minWidth: 390,
             maxWidth: 390,
             maxHeight: 310,
-            bgcolor: '#e3f2fd', // light blue background
+            background: 'linear-gradient(135deg,rgb(236, 244, 255) ,rgb(255, 255, 255))', // light blue background
             borderRadius: 3,
             boxShadow: 2,
             p: 1,
@@ -93,7 +96,7 @@ export default function Calander({ value, onChange, label = 'Select Date' }) {
         />
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" ref={timeBoxRef} sx={{ mt: 2, width: '80%' }}>
           <Typography variant="h6" fontWeight={700} color="#1976d2" letterSpacing={1}>
-            Current Time
+            Time
           </Typography>
           <DigitalClock fontSize={36} />
         </Box>

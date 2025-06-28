@@ -35,6 +35,7 @@ export default function DigitalClock({ fontSize = 32, color = '#1976d2', ...prop
         userSelect: 'none',
         border: '2px solid #3EA8F5',
         transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
+        
       }}
       {...props}
     >
