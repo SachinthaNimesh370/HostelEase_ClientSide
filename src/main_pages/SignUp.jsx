@@ -64,18 +64,22 @@ export default function SignUp() {
     };
 
   return (
-    <Box
-        display='flex'
-        justifyContent='center'   
-        alignItems='center'       
-        minHeight="100vh"         
+    <Box 
+        sx={{
+        minHeight: '100vh',
+        minWidth: '100vw',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}        
     >
         {/* Form Area */}
         <Box
             border={1}
             borderColor="grey.400"
             borderRadius="7px"
-            sx={{ width: '400px', padding: '20px' }}
+            sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
+           
         >
             <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
                         Sign In
@@ -104,7 +108,6 @@ export default function SignUp() {
                     type="search"
                     onChange={(e) => setLName(e.target.value)} 
                 />
-
             </Box>
 
             
