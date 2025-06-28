@@ -51,7 +51,16 @@ export default function SignIn() {
 
 
   return (
-    <Box>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        minWidth: '100vw',
+        background: 'linear-gradient(135deg,rgb(245, 249, 253) 0%,rgb(245, 249, 253) 100%)', // deep blue gradient
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
         <Box
             display="flex"
             flexDirection={'column'}
@@ -64,7 +73,7 @@ export default function SignIn() {
                 border={1}
                 borderColor="grey.400"
                 borderRadius="7px"
-                sx={{ width: '400px', padding: '20px' }}
+                sx={{ width: '400px', padding: '20px', background: 'rgb(255, 255, 255)' }}
             >
             <Box>
                 <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
