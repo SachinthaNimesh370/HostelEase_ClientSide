@@ -89,7 +89,7 @@ export default function SignUp() {
       >
             
             <Typography align="center" sx={{ fontSize: '35px', fontFamily: 'Roboto, sans-serif' }}>
-                        Sign In
+                        Sign Up
             </Typography>
 
             <Box

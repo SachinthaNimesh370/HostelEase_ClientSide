@@ -20,7 +20,7 @@ export default function SignIn() {
             regNo: regNo,
             password: password
         };
-        // Always save regNo to localStorage on button click
+        
         localStorage.setItem("regNo", regNo);
         axios.post('http://localhost:8090/api/v1/user/signin', userData)
             .then(response => {
@@ -41,7 +41,6 @@ export default function SignIn() {
                         }
                     }, 800);
                 } else {
-                    // If code is not 200, show error from data.massage if present
                     localStorage.removeItem("regNo");
                     const errorMsg = res.data?.massage || res.message || 'Signin failed.';
                     setAlert({ open: true, severity: 'error', message: errorMsg });
